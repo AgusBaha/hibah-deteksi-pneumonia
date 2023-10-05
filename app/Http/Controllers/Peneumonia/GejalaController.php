@@ -22,11 +22,18 @@ class GejalaController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi data dari $request
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'bobot' => 'required|numeric',
+            //Tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+
         gejala::create([
             'nama_gejala' => $request->nama,
             'bobot' => $request->bobot
         ]);
-        return view('pneumonia.gejala.index');
+        return redirect()->route('gejala.index');
     }
 
     public function edit($id)
@@ -37,15 +44,15 @@ class GejalaController extends Controller
 
     public function update(Request $request, $id)
     {
-         // Update data dalam database
-         $data = gejala::find($id);
-         $data->nama_gejala = $request->input('nama');
-         $data->bobot = $request->input('bobot');
-         // Tambahkan semua kolom yang perlu diperbarui
+        // Update data dalam database
+        $data = gejala::find($id);
+        $data->nama_gejala = $request->input('nama');
+        $data->bobot = $request->input('bobot');
+        // Tambahkan semua kolom yang perlu diperbarui
 
-         $data->save();
+        $data->save();
 
-         return redirect()->route('gejala.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('gejala.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -60,5 +67,4 @@ class GejalaController extends Controller
 
         return redirect()->route('gejala.index')->with('success', 'Data deleted successfully');
     }
-
 }
