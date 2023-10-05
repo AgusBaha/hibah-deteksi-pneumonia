@@ -8,12 +8,16 @@ use App\Models\gejala;
 
 class GejalaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dataGejala = gejala::latest()->paginate(10);
+        $search = $request->input('search');
+        $dataGejala = gejala::when($search, function ($query) use ($search) {
+            return $query->where('nama_gejala', 'like', '%' . $search . '%');
+        })->latest()->paginate(5);
 
         return view('pneumonia.gejala.index', compact('dataGejala'));
     }
+
 
     public function create()
     {
@@ -22,18 +26,25 @@ class GejalaController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data dari $request
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'bobot' => 'required|numeric',
-            //Tambahkan validasi lainnya sesuai kebutuhan
-        ]);
+        try {
+            // Validasi data dari $request
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'bobot' => 'required|numeric',
+                //Tambahkan validasi lainnya sesuai kebutuhan
+            ]);
 
-        gejala::create([
-            'nama_gejala' => $request->nama,
-            'bobot' => $request->bobot
-        ]);
-        return redirect()->route('gejala.index');
+            // Buat data gejala
+            gejala::create([
+                'nama_gejala' => $request->nama,
+                'bobot' => $request->bobot
+            ]);
+
+            return redirect()->route('gejala.index')->with('success', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini, contohnya, tampilkan pesan kesalahan atau log kesalahan
+            return redirect()->route('gejala.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -44,15 +55,33 @@ class GejalaController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Update data dalam database
-        $data = gejala::find($id);
-        $data->nama_gejala = $request->input('nama');
-        $data->bobot = $request->input('bobot');
-        // Tambahkan semua kolom yang perlu diperbarui
+        try {
+            // Validasi data dari $request
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'bobot' => 'required|numeric',
+                //Tambahkan validasi lainnya sesuai kebutuhan
+            ]);
 
-        $data->save();
+            // Cari data berdasarkan ID
+            $data = gejala::find($id);
+            if (!$data) {
+                // Handle jika data tidak ditemukan, misalnya, dengan melempar exception
+                throw new \Exception('Data tidak ditemukan');
+            }
 
-        return redirect()->route('gejala.index')->with('success', 'Data berhasil diperbarui');
+            // Update data
+            $data->nama_gejala = $request->input('nama');
+            $data->bobot = $request->input('bobot');
+            // Tambahkan semua kolom yang perlu diperbarui
+
+            $data->save();
+
+            return redirect()->route('gejala.index')->with('success', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini, contohnya, tampilkan pesan kesalahan atau log kesalahan
+            return redirect()->route('gejala.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)
