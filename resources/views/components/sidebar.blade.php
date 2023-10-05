@@ -9,7 +9,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -32,7 +32,8 @@
         </a>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Route::is('gejala.*') ? 'active' : '' }}" href="{{ route('gejala.index') }}">Gejala</a>
+                <a class="collapse-item {{ Route::is('gejala.*') ? 'active' : '' }}"
+                    href="{{ route('gejala.index') }}">Gejala</a>
                 <a class="collapse-item" href="#">Basis Kasus</a>
                 <a class="collapse-item" href="#">Konsultasi</a>
             </div>
