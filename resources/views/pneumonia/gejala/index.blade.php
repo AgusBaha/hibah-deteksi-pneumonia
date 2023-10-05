@@ -99,7 +99,10 @@
             </table>
         </div>
     </div>
-    {{ $dataGejala->links() }}
+    {{-- {{ $dataGejala->links() }} --}}
+    <div class="d-flex mt-1">
+        {!! $dataGejala->links() !!}
+    </div>
 
     @push('scripts')
     @endpush
