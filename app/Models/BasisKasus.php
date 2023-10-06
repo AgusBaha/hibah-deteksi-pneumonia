@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class gejala extends Model
+class BasisKasus extends Model
 {
     use HasFactory;
 
-    protected $table = 'gejala';
+    protected $table = 'basis_kasus';
     protected $guarded = [];
 
-    public function basisKasus()
+    public function gejala()
     {
-        return $this->belongsToMany(BasisKasus::class, 'basis_kasus_gejala')
+        return $this->belongsToMany(gejala::class, 'basis_kasus_gejala')
             ->withPivot('skor'); // Jika Anda memiliki kolom tambahan dalam tabel pivot
     }
 }
