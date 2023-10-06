@@ -10,7 +10,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="idBasisKasus">ID Basis</label>
-                            <input type="text" disabled name="idBasisKasus" class="form-control" id="idBasisKasus"
+                            <input type="text" name="idBasisKasus" class="form-control" id="idBasisKasus" readonly
                                 placeholder="ID Basis Kasus...">
                         </div>
 
@@ -60,7 +60,7 @@
                         url: "/generate-id-basis", // Ganti dengan URL yang sesuai
                         success: function(data) {
                             $("#idBasisKasus").val(data); // Set nilai input ID Basis
-                            $("#generatedId").text(data); // Tampilkan ID Basis di dalam span
+                            // $("#generatedId").text(data); // Tampilkan ID Basis di dalam span
                         }
                     });
                 }

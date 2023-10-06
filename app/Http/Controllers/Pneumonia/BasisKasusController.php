@@ -16,7 +16,7 @@ class BasisKasusController extends Controller
     {
         $search = $request->input('search');
         $dataBasisKasus = BasisKasus::when($search, function ($query) use ($search) {
-            return $query->where('nama_gejala', 'like', '%' . $search . '%');
+            return $query->where('nama_basis_kasus', 'like', '%' . $search . '%');
         })->latest()->paginate(10);
 
         return view('pneumonia.basiKasus.index', compact('dataBasisKasus'));
@@ -81,16 +81,18 @@ class BasisKasusController extends Controller
 
     public function generateId()
     {
-        // Mendapatkan ID Basis terakhir
         $lastBasis = BasisKasus::orderBy('id', 'desc')->first();
 
-        // Menghasilkan ID Basis baru
         if ($lastBasis) {
-            $id = 'BK-' . (intval(substr($lastBasis->id, 3)) + 1);
+            $lastId = $lastBasis->id_basis_kasus;
+            $lastNumericPart = intval(substr($lastId, 3)); // Mengambil bagian numerik dan mengubahnya menjadi integer
+            $nextNumericPart = $lastNumericPart + 1;
+            $newId = 'BK-' . $nextNumericPart;
         } else {
-            $id = 'BK-1';
+            $newId = 'BK-1';
         }
 
-        return response()->json($id); // Mengembalikan ID Basis sebagai JSON
+        // Kemudian, Anda dapat mengembalikan $newId
+        return response()->json($newId);
     }
 }

@@ -14,7 +14,6 @@ class gejala extends Model
 
     public function basisKasus()
     {
-        return $this->belongsToMany(BasisKasus::class, 'basis_kasus_gejala')
-            ->withPivot('skor'); // Jika Anda memiliki kolom tambahan dalam tabel pivot
+        return $this->belongsToMany(BasisKasus::class, 'basis_kasus_gejala'); // Jika Anda memiliki kolom tambahan dalam tabel pivot
     }
 }

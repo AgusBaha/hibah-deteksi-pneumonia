@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-6 text-md-end">
             <!-- Menggunakan kolom setengah layar untuk tombol "Add New Gejala" dan mengatur teks ke kanan -->
-            <form action="#" method="GET" class="mb-2">
+            <form action="{{ route('basiskasus.index') }}" method="GET" class="mb-2">
                 <div class="input-group">
                     <input type="text" class="form-control mr-1" placeholder="Cari Basis Kasus..." name="search"
                         value="{{ request('search') }}" style="width: 150px;">
@@ -56,12 +56,14 @@
                         $index = ($currentPage - 1) * $perPage + 1;
                     @endphp
 
-                    @forelse ($dataBasisKasus as $gejala)
+                    @forelse ($dataBasisKasus as $data)
                         <tr>
                             <td>{{ $index++ }}</td> <!-- Menampilkan nomor otomatis -->
-                            <td>{{ $gejala->nama_gejala }}</td>
-                            <td>{{ $gejala->bobot }}</td>
-                            <td>
+                            <td>{{ $data->id_basis_kasus }}</td>
+                            <td>{{ $data->nama_basis_kasus }}</td>
+                            <td>{{ $data->detail_basis_kasus }}</td>
+                            <td>[ todo: list waiting ]</td>
+                            {{-- <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('gejala.edit', $gejala->id) }}"
                                         class="btn btn-warning btn-sm mr-2">
@@ -88,7 +90,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                     @empty
                         <div class="alert alert-danger">

@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('basis_kasus_gejala', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('basis_kasus_id');
             $table->unsignedBigInteger('gejala_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('basis_kasus_id');
+            $table->timestamps(); // This line is correct and should be kept.
 
-            $table->foreign('basis_kasus_id')->references('id')->on('basis_kasus')->onDelete('cascade');
             $table->foreign('gejala_id')->references('id')->on('gejala')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreign('basis_kasus_id')->references('id')->on('basis_kasus')->onDelete('cascade');
         });
     }
 
