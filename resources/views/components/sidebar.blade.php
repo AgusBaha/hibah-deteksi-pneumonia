@@ -34,7 +34,8 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ Route::is('gejala.*') ? 'active' : '' }}"
                     href="{{ route('gejala.index') }}">Gejala</a>
-                <a class="collapse-item" href="#">Basis Kasus</a>
+                <a class="collapse-item {{ Route::is('basiskasus.*') ? 'active' : '' }}"
+                    href="{{ route('basiskasus.index') }}">Basis Kasus</a>
                 <a class="collapse-item" href="#">Konsultasi</a>
             </div>
         </div>

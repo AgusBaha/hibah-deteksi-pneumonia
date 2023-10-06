@@ -11,4 +11,9 @@ class gejala extends Model
 
     protected $table = 'gejala';
     protected $guarded = [];
+
+    public function basisKasus()
+    {
+        return $this->belongsToMany(BasisKasus::class, 'basis_kasus_gejala'); // Jika Anda memiliki kolom tambahan dalam tabel pivot
+    }
 }
