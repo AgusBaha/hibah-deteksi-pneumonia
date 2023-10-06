@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="card position-relative">
                 <div class="card-body shadow">
-                    <form method="POST" action="#">
+                    <form method="POST" action="{{ route('basiskasus.store') }}">
                         @csrf
                         <div class="form-group">
                             <label for="idBasisKasus">ID Basis</label>
@@ -24,7 +24,7 @@
                             <label for="detailBasisKasus">Detail Basis Kasus</label>
                             <textarea name="detailBasisKasus" class="form-control" id="detailBasisKasus" placeholder="Detail Basis Kasus..."></textarea>
                         </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -46,6 +46,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
     @push('scripts')

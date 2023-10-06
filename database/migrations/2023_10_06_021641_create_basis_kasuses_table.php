@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('basis_kasus', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_basis_kasus', 10)->unique();
-            $table->string('detail_kasus');
+            $table->string('id_basis_kasus', 10)->unique();
+            $table->string('nama_basis_kasus');
+            $table->string('detail_basis_kasus');
             $table->timestamps();
         });
     }

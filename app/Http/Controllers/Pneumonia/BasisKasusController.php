@@ -37,12 +37,14 @@ class BasisKasusController extends Controller
     public function store(Request $request)
     {
         $basisKasus = new BasisKasus();
-        $basisKasus->nama = $request->input('idBasisKasus');
-        $basisKasus->deskripsi = $request->input('detailBasisKasus');
+        $basisKasus->id_basis_kasus = $request->input('idBasisKasus');
+        $basisKasus->nama_basis_kasus = $request->input('namaBasisKasus');
+        $basisKasus->detail_basis_kasus = $request->input('detailBasisKasus');
         $basisKasus->save();
 
         // Simpan relasi dengan gejala yang dipilih
         $basisKasus->gejala()->sync($request->input('gejala'));
+        return redirect()->route('basiskasus.index')->with('success', 'Data berhasil diperbarui');
     }
 
     /**
