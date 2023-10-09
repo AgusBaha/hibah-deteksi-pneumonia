@@ -12,7 +12,10 @@ class GejalaController extends Controller
     {
         $search = $request->input('search');
         $dataGejala = gejala::when($search, function ($query) use ($search) {
-            return $query->where('nama_gejala', 'like', '%' . $search . '%');
+            return $query->where(function ($query) use ($search) {
+                $query->where('nama_gejala', 'like', '%' . $search . '%')
+                    ->orWhere('bobot', 'like', '%' . $search . '%');
+            });
         })->latest()->paginate(10);
 
         return view('pneumonia.gejala.index', compact('dataGejala'));
