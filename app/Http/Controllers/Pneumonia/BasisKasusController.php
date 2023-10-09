@@ -70,6 +70,7 @@ class BasisKasusController extends Controller
      */
     public function edit($id)
     {
+        $gejalaOptions = gejala::all();
         $basisKasus = BasisKasus::find($id);
         // Pastikan $basisKasus ditemukan
         if (!$basisKasus) {
@@ -77,7 +78,7 @@ class BasisKasusController extends Controller
         }
 
         // Tampilkan view edit dengan data $basisKasus
-        return view('basiskasus.edit', compact('basisKasus'));
+        return view('pneumonia.basiKasus.edit', compact('basisKasus', 'gejalaOptions'));
     }
 
     /**
