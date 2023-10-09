@@ -30,7 +30,18 @@
                 <div class="input-group">
                     <input type="text" class="form-control mr-1" placeholder="Cari Basis Kasus..." name="search"
                         value="{{ request('search') }}" style="width: 150px;">
-                    <button class="btn btn-outline-primary" type="submit">Cari</button>
+                    @if (request('search'))
+                        <div class="input-group-append">
+                            <a href="{{ route('basiskasus.index') }}" class="btn btn-outline-danger"
+                                style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <i class="fa fa-times"></i> <!-- Icon "X" -->
+                            </a>
+                        </div>
+                    @else
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fa fa-search"></i> <!-- Icon "Search" -->
+                        </button>
+                    @endif
                 </div>
             </form>
         </div>
@@ -62,10 +73,9 @@
                             <td>{{ $data->id_basis_kasus }}</td>
                             <td>{{ $data->nama_basis_kasus }}</td>
                             <td>{{ $data->detail_basis_kasus }}</td>
-                            <td>[ todo: list waiting ]</td>
-                            {{-- <td>
+                            <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('gejala.edit', $gejala->id) }}"
+                                    <a href="{{ route('basiskasus.edit', $data->id) }}"
                                         class="btn btn-warning btn-sm mr-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -75,7 +85,8 @@
                                                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                         </svg> Edit
                                     </a>
-                                    <form action="{{ route('gejala.delete', ['id' => $gejala->id]) }}" method="POST">
+                                    <form action="{{ route('basiskasus.destroy', ['id' => $data->id]) }}"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
@@ -90,7 +101,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            </td> --}}
+                            </td>
                         </tr>
                     @empty
                         <div class="alert alert-danger">
@@ -108,5 +119,14 @@
     </div>
 
     @push('scripts')
+        <script>
+            // JavaScript untuk mengubah icon pada tombol "Cari" menjadi tombol "Clear"
+            document.getElementById('clearSearchButton').addEventListener('click', function() {
+                document.querySelector('input[name="search"]').value = '';
+                this.style.display = 'none'; // Sembunyikan tombol "Clear"
+                document.querySelector('button[type="submit"]').innerHTML =
+                    '<i class="fa fa-search"></i>'; // Kembalikan icon "Cari"
+            });
+        </script>
     @endpush
 </x-app-layout>

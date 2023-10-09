@@ -36,3 +36,11 @@ Route::get('/data/basis-kasus', [App\Http\Controllers\Pneumonia\BasisKasusContro
 Route::get('/data/basiskasus/create', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'create'])->name('basiskasus.create');
 Route::post('/data/basiskasus/store', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'store'])->name('basiskasus.store');
 Route::get('/generate-id-basis', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'generateId'])->name('generate.basiskasus.create');
+
+Route::get('/basiskasus/{id}/edit', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'edit'])->name('basiskasus.edit');
+
+// Rute untuk mengupdate data
+Route::put('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'update'])->name('basiskasus.update');
+
+// Rute untuk menghapus data
+Route::delete('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'destroy'])->name('basiskasus.destroy');

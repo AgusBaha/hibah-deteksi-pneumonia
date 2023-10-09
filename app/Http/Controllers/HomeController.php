@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BasisKasus;
 use App\Models\gejala;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,7 @@ class HomeController extends Controller
     {
         $month = date('F');
         $dataGejala = gejala::count();
-        return view('dashboard.index', ['jumlahGejala' => $dataGejala, 'bulan' => $month]);
+        $dataBasisKasus = BasisKasus::count();
+        return view('dashboard.index', ['jumlahGejala' => $dataGejala, 'bulan' => $month, 'dataBasisKasus' => $dataBasisKasus]);
     }
 }
