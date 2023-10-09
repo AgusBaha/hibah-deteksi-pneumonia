@@ -24,13 +24,25 @@
         <div class="col-md-6"> <!-- Menggunakan kolom setengah layar untuk formulir pencarian -->
             <a href="{{ route('gejala.create') }}" class="btn btn-primary mb-2">Add New Gejala</a>
         </div>
+
         <div class="col-md-6 text-md-end">
             <!-- Menggunakan kolom setengah layar untuk tombol "Add New Gejala" dan mengatur teks ke kanan -->
             <form action="{{ route('gejala.index') }}" method="GET" class="mb-2">
                 <div class="input-group">
-                    <input type="text" class="form-control mr-1" placeholder="Cari gejala..." name="search"
+                    <input type="text" class="form-control mr-1" placeholder="Cari Basis Kasus..." name="search"
                         value="{{ request('search') }}" style="width: 150px;">
-                    <button class="btn btn-outline-primary" type="submit">Cari</button>
+                    @if (request('search'))
+                        <div class="input-group-append">
+                            <a href="{{ route('gejala.index') }}" class="btn btn-outline-danger"
+                                style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <i class="fa fa-times"></i> <!-- Icon "X" -->
+                            </a>
+                        </div>
+                    @else
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fa fa-search"></i> <!-- Icon "Search" -->
+                        </button>
+                    @endif
                 </div>
             </form>
         </div>
@@ -105,5 +117,14 @@
     </div>
 
     @push('scripts')
+        <script>
+            // JavaScript untuk mengubah icon pada tombol "Cari" menjadi tombol "Clear"
+            document.getElementById('clearSearchButton').addEventListener('click', function() {
+                document.querySelector('input[name="search"]').value = '';
+                this.style.display = 'none'; // Sembunyikan tombol "Clear"
+                document.querySelector('button[type="submit"]').innerHTML =
+                    '<i class="fa fa-search"></i>'; // Kembalikan icon "Cari"
+            });
+        </script>
     @endpush
 </x-app-layout>

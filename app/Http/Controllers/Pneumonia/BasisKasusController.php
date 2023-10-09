@@ -16,7 +16,11 @@ class BasisKasusController extends Controller
     {
         $search = $request->input('search');
         $dataBasisKasus = BasisKasus::when($search, function ($query) use ($search) {
-            return $query->where('nama_basis_kasus', 'like', '%' . $search . '%');
+            return $query->where(function ($query) use ($search) {
+                $query->where('id_basis_kasus', 'like', '%' . $search . '%')
+                    ->orWhere('nama_basis_kasus', 'like', '%' . $search . '%')
+                    ->orWhere('detail_basis_kasus', 'like', '%' . $search . '%');
+            });
         })->latest()->paginate(10);
 
         return view('pneumonia.basiKasus.index', compact('dataBasisKasus'));
@@ -36,15 +40,21 @@ class BasisKasusController extends Controller
      */
     public function store(Request $request)
     {
-        $basisKasus = new BasisKasus();
-        $basisKasus->id_basis_kasus = $request->input('idBasisKasus');
-        $basisKasus->nama_basis_kasus = $request->input('namaBasisKasus');
-        $basisKasus->detail_basis_kasus = $request->input('detailBasisKasus');
-        $basisKasus->save();
+        try {
+            $basisKasus = new BasisKasus();
+            $basisKasus->id_basis_kasus = $request->input('idBasisKasus');
+            $basisKasus->nama_basis_kasus = $request->input('namaBasisKasus');
+            $basisKasus->detail_basis_kasus = $request->input('detailBasisKasus');
+            $basisKasus->save();
 
-        // Simpan relasi dengan gejala yang dipilih
-        $basisKasus->gejala()->sync($request->input('gejala'));
-        return redirect()->route('basiskasus.index')->with('success', 'Data berhasil diperbarui');
+            // Simpan relasi dengan gejala yang dipilih
+            $basisKasus->gejala()->sync($request->input('gejala'));
+
+            return redirect()->route('basiskasus.index')->with('success', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini, misalnya log pesan kesalahan
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -58,25 +68,67 @@ class BasisKasusController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $basisKasus = BasisKasus::find($id);
+        // Pastikan $basisKasus ditemukan
+        if (!$basisKasus) {
+            return redirect()->route('basiskasus.index')->with('error', 'Data tidak ditemukan');
+        }
+
+        // Tampilkan view edit dengan data $basisKasus
+        return view('basiskasus.edit', compact('basisKasus'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $basisKasus = BasisKasus::find($id);
+            // Pastikan $basisKasus ditemukan
+            if (!$basisKasus) {
+                return redirect()->route('basiskasus.index')->with('error', 'Data tidak ditemukan');
+            }
+
+            // Update data berdasarkan input dari form
+            $basisKasus->id_basis_kasus = $request->input('idBasisKasus');
+            $basisKasus->nama_basis_kasus = $request->input('namaBasisKasus');
+            $basisKasus->detail_basis_kasus = $request->input('detailBasisKasus');
+            $basisKasus->save();
+
+            // Simpan relasi dengan gejala yang dipilih
+            $basisKasus->gejala()->sync($request->input('gejala'));
+
+            return redirect()->route('basiskasus.index')->with('success', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini, misalnya log pesan kesalahan
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $basisKasus = BasisKasus::find($id);
+            // Pastikan $basisKasus ditemukan
+            if (!$basisKasus) {
+                return redirect()->route('basiskasus.index')->with('error', 'Data tidak ditemukan');
+            }
+
+            // Hapus data
+            $basisKasus->delete();
+
+            return redirect()->route('basiskasus.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini, misalnya log pesan kesalahan
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function generateId()
