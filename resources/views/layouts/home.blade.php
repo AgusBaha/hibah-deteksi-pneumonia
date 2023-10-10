@@ -114,7 +114,7 @@
                                             <a href="Javascript:void(0)" class="dropdown-item border-radius-md">
                                                 <span>Informasi Penyakit</span>
                                             </a>
-                                            <a href="route('basiskasus.konsultasi')"
+                                            <a href="{{ route('basiskasus.konsultasi') }}"
                                                 class="dropdown-item border-radius-md">
                                                 <span>Konsultasi</span>
                                             </a>
