@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Peneumonia;
 
 use App\Http\Controllers\Controller;
+use App\Models\BasisKasus;
 use Illuminate\Http\Request;
 use App\Models\gejala;
 
@@ -98,5 +99,69 @@ class GejalaController extends Controller
         $data->delete();
 
         return redirect()->route('gejala.index')->with('success', 'Data deleted successfully');
+    }
+
+    public function konsultasi()
+    {
+        $dataGejala = gejala::all();
+        return view('pneumonia.konsultasi.show', compact('dataGejala'));
+    }
+
+    public function calculateSimilarity(Request $request)
+    {
+        // Mengambil data dari form checkbox yang dipilih
+        $selectedGejala = $request->input('selected_gejala');
+
+        // Mengambil semua basis kasus dari database
+        $basisKasus = BasisKasus::all();
+
+        // Inisialisasi variabel untuk menyimpan hasil similarity tertinggi
+        $highestSimilarityResult = null;
+
+        foreach ($basisKasus as $kasus) {
+            $similarity = 0; // Nilai similarity awal
+
+            // Mendapatkan gejala dari basis kasus
+            $gejalaKasus = $kasus->gejala;
+
+            // Inisialisasi array untuk menyimpan gejala yang dipilih
+            $selectedGejalaData = [];
+
+            // Memeriksa setiap gejala yang dipilih
+            foreach ($selectedGejala as $gejalaId) {
+                // Mengambil gejala yang dipilih dari database
+                $gejala = Gejala::find($gejalaId);
+
+                if ($gejala) {
+                    // Cek apakah gejala ada dalam gejala basis kasus
+                    $gejalaBasisKasus = $gejalaKasus->where('id', $gejala->id)->first();
+
+                    if ($gejalaBasisKasus) {
+                        // Tambahkan bobot gejala yang cocok ke similarity
+                        $similarity += $gejalaBasisKasus->bobot;
+
+                        // Simpan gejala yang dipilih beserta bobotnya
+                        $selectedGejalaData[] = [
+                            'nama_gejala' => $gejala->nama_gejala,
+                            'bobot' => $gejalaBasisKasus->bobot,
+                        ];
+                    }
+                }
+            }
+
+            // Periksa apakah similarity saat ini lebih tinggi dari similarity tertinggi yang ada
+            if ($highestSimilarityResult === null || $similarity > $highestSimilarityResult['similarity']) {
+                // Simpan hasil pencarian dengan nilai similarity tertinggi
+                $highestSimilarityResult = [
+                    'kasus' => $kasus->nama_basis_kasus,
+                    'detailBasisKasus' => $kasus->detail_basis_kasus,
+                    'similarity' => $similarity,
+                    'selectedGejala' => $selectedGejalaData,
+                ];
+            }
+        }
+
+        // Tampilkan hasil pencarian dengan nilai similarity tertinggi
+        return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult]);
     }
 }
