@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/template', function () {
+//     return view('Templates.index');
+// });
+
 Auth::routes([
     'register' => false
 ]);
