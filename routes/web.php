@@ -17,9 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/template', function () {
-//     return view('Templates.index');
-// });
 
 Auth::routes([
     'register' => false
@@ -34,17 +31,14 @@ Route::post('/data/gejala/store', [App\Http\Controllers\Peneumonia\GejalaControl
 Route::get('/data/edit/{id}', [App\Http\Controllers\Peneumonia\GejalaController::class, 'edit'])->name('gejala.edit');
 Route::put('/data/update/{id}', [App\Http\Controllers\Peneumonia\GejalaController::class, 'update'])->name('gejala.update');
 Route::delete('/data/delete/{id}', [App\Http\Controllers\Peneumonia\GejalaController::class, 'destroy'])->name('gejala.delete');
+Route::get('/konsultasi', [App\Http\Controllers\Peneumonia\GejalaController::class, 'konsultasi'])->name('basiskasus.konsultasi');
+Route::post('/process-selection', [App\Http\Controllers\Peneumonia\GejalaController::class, 'calculateSimilarity'])->name('similarity');
 
 // Route Basis Kasus
 Route::get('/data/basis-kasus', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'index'])->name('basiskasus.index');
 Route::get('/data/basiskasus/create', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'create'])->name('basiskasus.create');
 Route::post('/data/basiskasus/store', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'store'])->name('basiskasus.store');
 Route::get('/generate-id-basis', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'generateId'])->name('generate.basiskasus.create');
-
 Route::get('/basiskasus/{id}/edit', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'edit'])->name('basiskasus.edit');
-
-// Rute untuk mengupdate data
 Route::put('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'update'])->name('basiskasus.update');
-
-// Rute untuk menghapus data
 Route::delete('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'destroy'])->name('basiskasus.destroy');
