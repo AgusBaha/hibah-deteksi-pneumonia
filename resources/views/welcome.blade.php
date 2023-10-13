@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-md-6 position-relative">
                                 <div class="p-3 text-center">
-                                    <h1 class="text-gradient text-primary"> <span id="state2" countTo="15">0</span>+
+                                    <h1 class="text-gradient text-primary"> <span id="state2" countTo="250">0</span>+
                                     </h1>
                                     <h5 class="mt-3">Konsultasi</h5>
                                     <p class="text-sm font-weight-normal">Jumlah Konsultasi Menggunakan Applikasi</p>
