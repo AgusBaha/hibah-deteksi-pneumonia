@@ -22,6 +22,17 @@
             <h1>Hasil Pencarian Similarity Tertinggi</h1>
 
             @if (!empty($result))
+                @if (isset($message))
+                    <div class="alert alert-success text-white" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+
+                @if (isset($errorMessage))
+                    <div class="alert alert-danger text-white" role="alert">
+                        {{ $errorMessage }}
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                         <tr>
