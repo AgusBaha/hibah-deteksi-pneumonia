@@ -226,12 +226,12 @@ class GejalaController extends Controller
         if ($highestSimilarityResult['kasus'] === $deteksiValue) {
             // Lakukan sesuatu jika mereka sama
             // Misalnya, tampilkan pesan keberhasilan
-            $message = "Deteksi berhasil, hasil sesuai dengan basis kasus: " . $highestSimilarityResult['kasus'];
+            $message = "Deteksi berhasil, hasil sesuai dengan diagnosis dokter: " . $highestSimilarityResult['kasus'];
             return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult, 'message' => $message]);
         } else {
             // Lakukan sesuatu jika mereka tidak sama
             // Misalnya, tampilkan pesan kesalahan
-            $errorMessage = "Deteksi gagal, hasil tidak sesuai dengan basis kasus.";
+            $errorMessage = "Deteksi gagal, hasil tidak sesuai dengan diagnosis dokter.";
             return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult, 'errorMessage' => $errorMessage]);
         }
     }

@@ -74,7 +74,7 @@
                         </button>
                         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
                             <ul class="navbar-nav navbar-nav-hover ms-auto">
-                                <li class="nav-item dropdown dropdown-hover mx-2">
+                                {{-- <li class="nav-item dropdown dropdown-hover mx-2">
                                     <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
                                         id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="material-icons opacity-6 me-2 text-md">dashboard</i>
@@ -130,7 +130,7 @@
                                         </div>
 
                                     </div>
-                                </li>
+                                </li> --}}
 
                                 <li class="nav-item mx-2">
                                     <a href="{{ route('basiskasus.konsultasi') }}"

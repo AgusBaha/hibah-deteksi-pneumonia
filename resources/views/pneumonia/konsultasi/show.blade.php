@@ -10,6 +10,7 @@
                         <h1 class="text-white pt-3 mt-n5">Konsultasi Online</h1>
                         <p class="lead text-white mt-3">Silahkan dapat Mengisi Data Berikut. <br />
                         </p>
+                        <a href="{{ route('basiskasus.konsultasi') }}" class="btn bg-white text-dark">Konsultasi</a>
                     </div>
                 </div>
             </div>
@@ -21,24 +22,33 @@
 
         <form action="{{ route('similarity') }}" method="POST">
             @csrf
-            <label>Pilih Basis Kasus:</label><br>
-            <div class="form-check">
-                @foreach ($dataGejala as $kasus)
-                    <input type="checkbox" class="form-check-input" name="selected_gejala[]" id="flexCheckDefault"
-                        value="{{ $kasus->id }}">
-                    {{ $kasus->nama_gejala }}<br>
-                @endforeach
-                <div class="col-lg-4 mt-2">
-                    <div class="input-group input-group-static mb-4">
-                        <label>Deteksi</label>
-                        <input class="form-control" placeholder="Pneumonia" name="deteksi" type="text">
+            <section class="py-7">
+                <div class="container">
+                    <div class="row justify-space-between py-2">
+                        <div class="col-lg-4 mx-auto">
+                            <div class="input-group input-group-static mb-4">
+                                <h6><b> Basis Kasus:</b></h6><br>
+                                <div class="form-check">
+                                    @foreach ($dataGejala as $kasus)
+                                        <input type="checkbox" class="form-check-input" name="selected_gejala[]"
+                                            id="flexCheckDefault" value="{{ $kasus->id }}">
+                                        {{ $kasus->nama_gejala }}<br>
+                                    @endforeach
+
+                                    <div class="input-group input-group-static mt-2 mb-1">
+                                        <label>Diagnosis Dokter (Tahap Pengujian)</label>
+                                        <input class="form-control" placeholder="Pneumonia" name="deteksi" type="text">
+                                    </div>
+
+                                    <button type="submit" class="btn bg-gradient-primary btn-icon btn-sm mt-1">Proses
+                                        Pilihan</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="btn bg-gradient-primary btn-icon btn-sm mt-1">Proses Pilihan</button>
-            </div>
+            </section>
         </form>
-
-
     </div>
 
 

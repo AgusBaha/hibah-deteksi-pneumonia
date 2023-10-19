@@ -12,11 +12,30 @@
                             di salah
                             satu atau kedua paru-paru. <br />
                         </p>
+                        <a href="{{ route('basiskasus.konsultasi') }}" class="btn bg-white text-dark">Konsultasi</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
+
+    {{-- <header class="bg-gradient-dark">
+        <div class="page-header min-vh-75" style="background-image: url('{{ asset('Assets/img/bg2.jpg') }}');">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center mx-auto my-auto">
+                        <h1 class="text-white">Selamat Datang.</h1>
+                        <p class="lead mb-4 text-white opacity-8">Pneumonia Infeksi yang menimbulkan peradangan pada kantung
+                            udara
+                            di salah
+                            satu atau kedua paru-paru.</p>
+                        <a href="{{ route('konsultasi') }}" class="btn bg-white text-dark">Konsultasi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> --}}
 
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
 
