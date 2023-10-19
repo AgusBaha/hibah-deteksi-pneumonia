@@ -10,6 +10,7 @@
                         <h1 class="text-white pt-3 mt-n5">Konsultasi Online</h1>
                         <p class="lead text-white mt-3">Silahkan dapat Mengisi Data Berikut. <br />
                         </p>
+                        <a href="{{ route('basiskasus.konsultasi') }}" class="btn bg-white text-dark">Konsultasi</a>
                     </div>
                 </div>
             </div>
