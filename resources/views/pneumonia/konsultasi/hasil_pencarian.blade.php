@@ -54,6 +54,22 @@
                         </tr>
                     </tbody>
                 </table>
+
+                @if (isset($message))
+                    <div class="alert alert-success text-light" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+
+                @if (isset($errorMessage))
+                    <div class="alert alert-danger text-light" role="alert">
+                        {{ $errorMessage }}
+                    </div>
+                @endif
+
+                </tr>
+                </tbody>
+                </table>
             @else
                 <p>Tidak ada hasil similarity yang ditemukan.</p>
             @endif

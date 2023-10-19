@@ -107,6 +107,64 @@ class GejalaController extends Controller
         return view('pneumonia.konsultasi.show', compact('dataGejala'));
     }
 
+    // public function calculateSimilarity(Request $request)
+    // {
+    //     // Mengambil data dari form checkbox yang dipilih
+    //     $selectedGejala = $request->input('selected_gejala');
+
+    //     // Mengambil semua basis kasus dari database
+    //     $basisKasus = BasisKasus::all();
+
+    //     // Inisialisasi variabel untuk menyimpan hasil similarity tertinggi
+    //     $highestSimilarityResult = null;
+
+    //     foreach ($basisKasus as $kasus) {
+    //         $similarity = 0; // Nilai similarity awal
+
+    //         // Mendapatkan gejala dari basis kasus
+    //         $gejalaKasus = $kasus->gejala;
+
+    //         // Inisialisasi array untuk menyimpan gejala yang dipilih
+    //         $selectedGejalaData = [];
+
+    //         // Memeriksa setiap gejala yang dipilih
+    //         foreach ($selectedGejala as $gejalaId) {
+    //             // Mengambil gejala yang dipilih dari database
+    //             $gejala = Gejala::find($gejalaId);
+
+    //             if ($gejala) {
+    //                 // Cek apakah gejala ada dalam gejala basis kasus
+    //                 $gejalaBasisKasus = $gejalaKasus->where('id', $gejala->id)->first();
+
+    //                 if ($gejalaBasisKasus) {
+    //                     // Tambahkan bobot gejala yang cocok ke similarity
+    //                     $similarity += $gejalaBasisKasus->bobot;
+
+    //                     // Simpan gejala yang dipilih beserta bobotnya
+    //                     $selectedGejalaData[] = [
+    //                         'nama_gejala' => $gejala->nama_gejala,
+    //                         'bobot' => $gejalaBasisKasus->bobot,
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         // Periksa apakah similarity saat ini lebih tinggi dari similarity tertinggi yang ada
+    //         if ($highestSimilarityResult === null || $similarity > $highestSimilarityResult['similarity']) {
+    //             // Simpan hasil pencarian dengan nilai similarity tertinggi
+    //             $highestSimilarityResult = [
+    //                 'kasus' => $kasus->nama_basis_kasus,
+    //                 'detailBasisKasus' => $kasus->detail_basis_kasus,
+    //                 'similarity' => $similarity,
+    //                 'selectedGejala' => $selectedGejalaData,
+    //             ];
+    //         }
+    //     }
+
+    //     // Tampilkan hasil pencarian dengan nilai similarity tertinggi
+    //     return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult]);
+    // }
+
     public function calculateSimilarity(Request $request)
     {
         // Mengambil data dari form checkbox yang dipilih
@@ -117,6 +175,9 @@ class GejalaController extends Controller
 
         // Inisialisasi variabel untuk menyimpan hasil similarity tertinggi
         $highestSimilarityResult = null;
+
+        // Mendapatkan nilai "deteksi" dari input
+        $deteksiValue = $request->input('deteksi');
 
         foreach ($basisKasus as $kasus) {
             $similarity = 0; // Nilai similarity awal
@@ -161,7 +222,17 @@ class GejalaController extends Controller
             }
         }
 
-        // Tampilkan hasil pencarian dengan nilai similarity tertinggi
-        return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult]);
+        // Periksa apakah nilai "deteksi" sama dengan nama_basis_kasus
+        if ($highestSimilarityResult['kasus'] === $deteksiValue) {
+            // Lakukan sesuatu jika mereka sama
+            // Misalnya, tampilkan pesan keberhasilan
+            $message = "Deteksi berhasil, hasil sesuai dengan basis kasus: " . $highestSimilarityResult['kasus'];
+            return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult, 'message' => $message]);
+        } else {
+            // Lakukan sesuatu jika mereka tidak sama
+            // Misalnya, tampilkan pesan kesalahan
+            $errorMessage = "Deteksi gagal, hasil tidak sesuai dengan basis kasus.";
+            return view('pneumonia.konsultasi.hasil_pencarian', ['result' => $highestSimilarityResult, 'errorMessage' => $errorMessage]);
+        }
     }
 }

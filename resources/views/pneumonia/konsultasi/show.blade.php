@@ -28,9 +28,16 @@
                         value="{{ $kasus->id }}">
                     {{ $kasus->nama_gejala }}<br>
                 @endforeach
+                <div class="col-lg-4 mt-2">
+                    <div class="input-group input-group-static mb-4">
+                        <label>Deteksi</label>
+                        <input class="form-control" placeholder="Pneumonia" name="deteksi" type="text">
+                    </div>
+                </div>
                 <button type="submit" class="btn bg-gradient-primary btn-icon btn-sm mt-1">Proses Pilihan</button>
             </div>
         </form>
+
 
     </div>
 
