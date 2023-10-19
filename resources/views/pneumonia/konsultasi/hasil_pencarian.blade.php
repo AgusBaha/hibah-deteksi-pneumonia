@@ -23,13 +23,13 @@
 
             @if (!empty($result))
                 @if (isset($message))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success text-white" role="alert">
                         {{ $message }}
                     </div>
                 @endif
 
                 @if (isset($errorMessage))
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger text-white" role="alert">
                         {{ $errorMessage }}
                     </div>
                 @endif
