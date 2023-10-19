@@ -22,6 +22,17 @@
             <h1>Hasil Pencarian Similarity Tertinggi</h1>
 
             @if (!empty($result))
+                @if (isset($message))
+                    <div class="alert alert-success" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+
+                @if (isset($errorMessage))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $errorMessage }}
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -53,22 +64,6 @@
                             <td>{{ $result['similarity'] }}</td>
                         </tr>
                     </tbody>
-                </table>
-
-                @if (isset($message))
-                    <div class="alert alert-success text-light" role="alert">
-                        {{ $message }}
-                    </div>
-                @endif
-
-                @if (isset($errorMessage))
-                    <div class="alert alert-danger text-light" role="alert">
-                        {{ $errorMessage }}
-                    </div>
-                @endif
-
-                </tr>
-                </tbody>
                 </table>
             @else
                 <p>Tidak ada hasil similarity yang ditemukan.</p>
