@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\User\DetectionController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +47,8 @@ Route::put('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusControl
 Route::delete('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'destroy'])->name('basiskasus.destroy');
 
 Route::resource('/question', QuestionController::class);
+// Route::get('/deteksi/kanker', [App\Http\Controllers\User\DetectionController::class, 'start'])->name('question.start');
+
+// Route untuk user memulai deteksi tanpa login
+Route::get('/', [DetectionController::class, 'start'])->name('user.detection.start');
+Route::post('/detection/answer/{question}', [DetectionController::class, 'answer'])->name('user.detection.answer');

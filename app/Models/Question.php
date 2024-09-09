@@ -10,5 +10,7 @@ class Question extends Model
     use HasFactory;
 
     protected $table = 'questions';
+
+    // If using $guarded
     protected $guarded = [];
 }
