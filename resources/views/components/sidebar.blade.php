@@ -25,10 +25,10 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
+            <span>Pneumonia</span>
         </a>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -36,7 +36,19 @@
                     href="{{ route('gejala.index') }}">Gejala</a>
                 <a class="collapse-item {{ Route::is('basiskasus.*') ? 'active' : '' }}"
                     href="{{ route('basiskasus.index') }}">Basis Kasus</a>
-                <a class="collapse-item" href="#">Konsultasi</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+            aria-controls="collapseOne">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Kanker</span>
+        </a>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Route::is('question.*') ? 'active' : '' }}"
+                    href="{{ route('question.index') }}">Question</a>
             </div>
         </div>
     </li>

@@ -19,7 +19,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('Assets/img/apple-icon.png') }}"> --}}
+    {{--
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('Assets/img/apple-icon.png') }}"> --}}
     <link rel="icon" type="image/png" href="{{ asset('Assets/img/favicon.png') }}">
 
     <title>
@@ -137,6 +138,13 @@
                                         class="nav-link ps-2 d-flex cursor-pointer align-items-center">
                                         <i class="material-icons opacity-6 me-2 text-md">article</i>
                                         Konsultasi
+                                    </a>
+                                </li>
+                                <li class="nav-item mx-2">
+                                    <a href="{{ route('user.detection.start') }}"
+                                        class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                        <i class="material-icons opacity-6 me-2 text-md">article</i>
+                                        Kanker
                                     </a>
                                 </li>
                                 <li class="nav-item my-auto ms-3 ms-lg-0">
