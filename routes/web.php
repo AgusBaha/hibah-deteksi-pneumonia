@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,3 +43,5 @@ Route::get('/generate-id-basis', [App\Http\Controllers\Pneumonia\BasisKasusContr
 Route::get('/basiskasus/{id}/edit', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'edit'])->name('basiskasus.edit');
 Route::put('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'update'])->name('basiskasus.update');
 Route::delete('/basiskasus/{id}', [App\Http\Controllers\Pneumonia\BasisKasusController::class, 'destroy'])->name('basiskasus.destroy');
+
+Route::resource('/question', QuestionController::class);
