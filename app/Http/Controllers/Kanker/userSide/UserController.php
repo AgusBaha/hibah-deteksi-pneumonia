@@ -11,42 +11,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function start()
-    {
-        $mainQuestions = MainQuestion::all();
-        return view('user.start', compact('mainQuestions'));
-    }
-
-    public function answer(Request $request)
-    {
-        // Simpan jawaban user
-        $response = new UserResponse();
-        $response->question_id = $request->question_id;
-        $response->question_type = $request->question_type; // 'main' or 'specific'
-        $response->response = $request->response;
-        $response->weight = $request->weight; // Bobot berdasarkan jawaban
-        $response->save();
-
-        // Logic untuk lanjut ke pertanyaan berikutnya
-        // Jika jawabannya 'yes', maka lanjut ke specific question
-        if ($request->response == 'yes') {
-            $specificQuestions = SpecificQuestion::where('main_question_id', $request->question_id)->get();
-            return view('user.specific', compact('specificQuestions'));
-        }
-
-        return redirect()->route('user.summary');
-    }
-
-    public function summary()
-    {
-        // Kalkulasi total bobot dan tampilkan summary
-        $totalWeight = UserResponse::sum('weight');
-        return view('user.summary', compact('totalWeight'));
-    }
-
     public function index()
     {
         // Misalnya kita ambil pertanyaan utama pertama
@@ -156,43 +120,5 @@ class UserController extends Controller
                 'yes_count' => $totalYesCount,
             ]);
         }
-    }
-
-    public function store(Request $request)
-    {
-        // Process user's answer
-        $answer = $request->input('answer');
-        $mainQuestions = MainQuestion::all();
-        $currentQuestionIndex = $request->input('current_question_index', 0);
-
-        // Check if user answered "YES"
-        if ($answer == 'yes') {
-            // Check if there are more main questions
-            $nextQuestion = $mainQuestions->skip($currentQuestionIndex + 1)->first();
-            if ($nextQuestion) {
-                return view('kanker.user.detect', [
-                    'mainQuestion' => $nextQuestion,
-                    'current_question_index' => $currentQuestionIndex + 1
-                ]);
-            }
-
-            // If all main questions answered, proceed to specific questions
-            $categories = Category::with('specificQuestions')->get();
-            return view('kanker.user.specific_questions', [
-                'categories' => $categories
-            ]);
-        }
-
-        // Proceed to next main question
-        $nextQuestion = $mainQuestions->skip($currentQuestionIndex + 1)->first();
-        if ($nextQuestion) {
-            return view('kanker.user.detect', [
-                'mainQuestion' => $nextQuestion,
-                'current_question_index' => $currentQuestionIndex + 1
-            ]);
-        }
-
-        // If no more questions, show end or summary page
-        return view('kanker.user.summary');
     }
 }
