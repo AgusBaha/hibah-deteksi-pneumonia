@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Kanker\adminSide\CategoryController;
+use App\Http\Controllers\Kanker\adminSide\MainQuestionController;
+use App\Http\Controllers\Kanker\adminSide\SpecificQuestionController;
+use App\Http\Controllers\Kanker\userSide\UserController;
 use App\Http\Controllers\User\DetectionController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +56,14 @@ Route::resource('/question', QuestionController::class);
 // Route untuk user memulai deteksi tanpa login
 Route::get('/', [DetectionController::class, 'start'])->name('user.detection.start');
 Route::post('/detection/answer/{question}', [DetectionController::class, 'answer'])->name('user.detection.answer');
+
+// Deteksi kanker
+Route::prefix('admin')->group(function () {
+    Route::resource('categories', CategoryController::class);
+    Route::resource('main-questions', MainQuestionController::class);
+    Route::resource('specific-questions', SpecificQuestionController::class);
+});
+
+Route::get('/deteksi-kanker', [UserController::class, 'start'])->name('user.start');
+Route::post('/answer', [UserController::class, 'answer'])->name('user.answer');
+Route::get('/summary', [UserController::class, 'summary'])->name('user.summary');
