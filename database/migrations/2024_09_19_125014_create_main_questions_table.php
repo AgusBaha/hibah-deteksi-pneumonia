@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('main_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->text('question');
-            $table->decimal('weight', 5, 2)->nullable();
+            $table->integer('weight');
             $table->timestamps();
         });
     }

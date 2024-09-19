@@ -9,10 +9,10 @@ class SpecificQuestion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['main_question_id', 'question', 'weight'];
+    protected $fillable = ['category_id', 'question', 'weight'];
 
-    public function mainQuestion()
+    public function category()
     {
-        return $this->belongsTo(MainQuestion::class);
+        return $this->belongsTo(Category::class);
     }
 }

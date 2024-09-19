@@ -37,7 +37,6 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Category</th>
                         <th>Question</th>
                         <th>Weight</th>
                         <th>Actions</th>
@@ -47,7 +46,6 @@
                     @foreach($mainQuestions as $mainQuestion)
                     <tr>
                         <td>{{ $mainQuestion->id }}</td>
-                        <td>{{ $mainQuestion->category->name }}</td>
                         <td>{{ $mainQuestion->question }}</td>
                         <td>{{ $mainQuestion->weight }}</td>
                         <td>

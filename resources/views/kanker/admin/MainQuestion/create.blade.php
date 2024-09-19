@@ -7,17 +7,7 @@
             <form action="{{ route('main-questions.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="category">Category:</label>
-                    <select name="category_id" id="category" class="form-control" required>
-                        <option value="">Select Category</option>
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="question">Main Question:</label>
+                    <label for="question">Question:</label>
                     <textarea name="question" id="question" class="form-control" required></textarea>
                 </div>
 

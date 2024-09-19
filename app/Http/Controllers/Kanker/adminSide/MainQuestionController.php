@@ -9,80 +9,47 @@ use Illuminate\Http\Request;
 
 class MainQuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $mainQuestions = MainQuestion::with('category')->get();
+        $mainQuestions = MainQuestion::all();
         return view('kanker.admin.MainQuestion.index', compact('mainQuestions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $categories = Category::all();
-        return view('kanker.admin.MainQuestion.create', compact('categories'));
+        return view('kanker.admin.MainQuestion.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'question' => 'required|string',
-            'weight' => 'nullable|numeric',
+            'question' => 'required|string|max:255',
+            'weight' => 'required|integer',
         ]);
 
         MainQuestion::create($request->all());
-
-        return redirect()->route('main-questions.index')->with('success', 'Main Question created successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main question created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(MainQuestion $mainQuestion)
     {
-        $categories = Category::all();
-        return view('kanker.admin.MainQuestion.edit', compact('mainQuestion', 'categories'));
+        return view('kanker.admin.MainQuestion.edit', compact('mainQuestion'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, MainQuestion $mainQuestion)
     {
         $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'question' => 'required|string',
-            'weight' => 'nullable|numeric',
+            'question' => 'required|string|max:255',
+            'weight' => 'required|integer',
         ]);
 
         $mainQuestion->update($request->all());
-
-        return redirect()->route('main-questions.index')->with('success', 'Main Question updated successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main question updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(MainQuestion $mainQuestion)
     {
         $mainQuestion->delete();
-
-        return redirect()->route('main-questions.index')->with('success', 'Main Question deleted successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main question deleted successfully.');
     }
 }

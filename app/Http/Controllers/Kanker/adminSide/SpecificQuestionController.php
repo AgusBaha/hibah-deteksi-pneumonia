@@ -3,86 +3,58 @@
 namespace App\Http\Controllers\Kanker\adminSide;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kanker\Category;
 use App\Models\Kanker\MainQuestion;
 use App\Models\Kanker\SpecificQuestion;
 use Illuminate\Http\Request;
 
 class SpecificQuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $specificQuestions = SpecificQuestion::with('mainQuestion')->get();
+        $specificQuestions = SpecificQuestion::with('category')->get();
         return view('kanker.admin.SpecificQuestions.index', compact('specificQuestions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $mainQuestions = MainQuestion::all();
-        return view('kanker.admin.SpecificQuestions.create', compact('mainQuestions'));
+        $categories = Category::all();
+        return view('kanker.admin.SpecificQuestions.create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'main_question_id' => 'required|exists:main_questions,id',
-            'question' => 'required|string',
-            'weight' => 'nullable|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'question' => 'required|string|max:255',
+            'weight' => 'required|integer',
         ]);
 
         SpecificQuestion::create($request->all());
-
-        return redirect()->route('specific-questions.index')->with('success', 'Specific Question created successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific question created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(SpecificQuestion $specificQuestion)
     {
-        $mainQuestions = MainQuestion::all();
-        return view('kanker.admin.SpecificQuestions.edit', compact('specificQuestion', 'mainQuestions'));
+        $categories = Category::all();
+        return view('kanker.admin.SpecificQuestions.edit', compact('specificQuestion', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, SpecificQuestion $specificQuestion)
     {
         $request->validate([
-            'main_question_id' => 'required|exists:main_questions,id',
-            'question' => 'required|string',
-            'weight' => 'nullable|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'question' => 'required|string|max:255',
+            'weight' => 'required|integer',
         ]);
 
         $specificQuestion->update($request->all());
-
-        return redirect()->route('specific-questions.index')->with('success', 'Specific Question updated successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific question updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(SpecificQuestion $specificQuestion)
     {
         $specificQuestion->delete();
-
-        return redirect()->route('specific-questions.index')->with('success', 'Specific Question deleted successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific question deleted successfully.');
     }
 }

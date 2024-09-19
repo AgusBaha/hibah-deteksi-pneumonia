@@ -11,8 +11,8 @@ class Category extends Model
 
     protected $fillable = ['name', 'descriptions'];
 
-    public function mainQuestions()
+    public function specificQuestions()
     {
-        return $this->hasMany(MainQuestion::class);
+        return $this->hasMany(SpecificQuestion::class);
     }
 }

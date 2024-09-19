@@ -9,13 +9,12 @@
                 @method('PUT')
 
                 <div class="form-group">
-                    <label for="main_question">Main Question:</label>
-                    <select name="main_question_id" id="main_question" class="form-control" required>
-                        @foreach($mainQuestions as $mainQuestion)
-                        <option value="{{ $mainQuestion->id }}" {{ $specificQuestion->main_question_id ==
-                            $mainQuestion->id ?
+                    <label for="category">Category:</label>
+                    <select name="category_id" id="category" class="form-control" required>
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ $specificQuestion->category_id == $category->id ?
                             'selected' : '' }}>
-                            {{ $mainQuestion->question }}
+                            {{ $category->name }}
                         </option>
                         @endforeach
                     </select>

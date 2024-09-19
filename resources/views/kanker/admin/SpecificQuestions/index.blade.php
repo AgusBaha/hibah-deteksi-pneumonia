@@ -47,7 +47,7 @@
                     @foreach($specificQuestions as $specificQuestion)
                     <tr>
                         <td>{{ $specificQuestion->id }}</td>
-                        <td>{{ $specificQuestion->mainQuestion->question }}</td>
+                        <td>{{ $specificQuestion->category->name }}</td>
                         <td>{{ $specificQuestion->question }}</td>
                         <td>{{ $specificQuestion->weight }}</td>
                         <td>
