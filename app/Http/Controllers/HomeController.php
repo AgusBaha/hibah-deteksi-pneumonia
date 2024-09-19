@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\BasisKasus;
 use App\Models\gejala;
+use App\Models\Kanker\Category;
+use App\Models\Kanker\MainQuestion;
+use App\Models\Kanker\SpecificQuestion;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,8 +30,9 @@ class HomeController extends Controller
     public function index()
     {
         $month = date('F');
-        $dataGejala = gejala::count();
-        $dataBasisKasus = BasisKasus::count();
-        return view('dashboard.index', ['jumlahGejala' => $dataGejala, 'bulan' => $month, 'dataBasisKasus' => $dataBasisKasus]);
+        $categories = Category::count();
+        $mainQuestions = MainQuestion::count();
+        $specificQuestions = SpecificQuestion::count();
+        return view('dashboard.index', ['bulan' => $month, 'categories' => $categories, 'mainQuestions' => $mainQuestions, 'specificQuestions' => $specificQuestions]);
     }
 }
