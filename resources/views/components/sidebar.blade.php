@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-        <div class="sidebar-brand-text mx-3">Deteksi Pneumonia</div>
+        <div class="sidebar-brand-text mx-3">Deteksi Kanker</div>
     </a>
 
     <!-- Divider -->
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item active">
+    {{-- <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
@@ -38,7 +38,7 @@
                     href="{{ route('basiskasus.index') }}">Basis Kasus</a>
             </div>
         </div>
-    </li>
+    </li> --}}
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
             aria-controls="collapseOne">
@@ -47,8 +47,12 @@
         </a>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Route::is('question.*') ? 'active' : '' }}"
-                    href="{{ route('question.index') }}">Question</a>
+                <a class="collapse-item {{ Route::is('categories.*') ? 'active' : '' }}"
+                    href="{{ route('categories.index') }}">Categories</a>
+                <a class="collapse-item {{ Route::is('main-questions.*') ? 'active' : '' }}"
+                    href="{{ route('main-questions.index') }}">Main Questions</a>
+                <a class="collapse-item {{ Route::is('specific-questions.*') ? 'active' : '' }}"
+                    href="{{ route('specific-questions.index') }}">Specific Questions</a>
             </div>
         </div>
     </li>

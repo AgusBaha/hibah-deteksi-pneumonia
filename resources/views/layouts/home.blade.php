@@ -141,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item mx-2">
-                                    <a href="{{ route('user.detection.start') }}"
+                                    <a href="{{ route('deteksi.index') }}"
                                         class="nav-link ps-2 d-flex cursor-pointer align-items-center">
                                         <i class="material-icons opacity-6 me-2 text-md">article</i>
                                         Kanker
