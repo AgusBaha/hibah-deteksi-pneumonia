@@ -64,6 +64,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('specific-questions', SpecificQuestionController::class);
 });
 
-Route::get('/deteksi-kanker', [UserController::class, 'start'])->name('user.start');
+
+Route::get('/deteksi-kanker', [UserController::class, 'index'])->name('deteksi.index');
+Route::post('/deteksi-kanker', [UserController::class, 'store'])->name('deteksi.store');
+Route::post('/deteksi-kanker/proses', [UserController::class, 'processQuestion'])->name('deteksi.process');
+
+// Route::get('/deteksi-kanker', [UserController::class, 'start'])->name('user.start');
 Route::post('/answer', [UserController::class, 'answer'])->name('user.answer');
 Route::get('/summary', [UserController::class, 'summary'])->name('user.summary');
