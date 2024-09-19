@@ -27,9 +27,9 @@
             <!-- Tampilkan jenis pertanyaan (Main atau Specific) -->
             <h3 id="question-label">
                 @if ($question_type == 'main')
-                <span class="badge bg-primary">Pertanyaan Umum</span>
+                <span class="badge bg-primary">Main Question</span>
                 @else
-                <span class="badge bg-secondary">Pertanyaan Spesifik</span>
+                <span class="badge bg-secondary">Specific Question</span>
                 @endif
             </h3>
 
@@ -59,37 +59,37 @@
 <!-- Ajax -->
 <script>
     function submitAnswer(answer) {
-        let questionId = document.getElementById('question-id').value;
-        let questionType = document.getElementById('question-type').value;
-        let yesCount = document.getElementById('yes-count').value;
+    let questionId = document.getElementById('question-id').value;
+    let questionType = document.getElementById('question-type').value;
+    let yesCount = document.getElementById('yes-count').value;
 
-        $.ajax({
-            url: '{{ route("deteksi.process") }}'
-            , method: 'POST'
-            , data: {
-                _token: '{{ csrf_token() }}'
-                , answer: answer
-                , current_question_id: questionId
-                , question_type: questionType
-                , yes_count: yesCount
+    $.ajax({
+        url: '{{ route("deteksi.process") }}',
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            answer: answer,
+            current_question_id: questionId,
+            question_type: questionType,
+            yes_count: yesCount
+        },
+        success: function(response) {
+            if (response.status == 'complete') {
+                $('#question-area').html('<p>' + response.message + '</p>');
+                return;
             }
-            , success: function(response) {
-                if (response.status == 'complete') {
-                    $('#question-area').html('<p>' + response.message + '</p>');
-                    return;
-                }
 
-                // Update the question text and hidden fields
-                $('#question-text').text(response.question);
-                $('#question-id').val(response.question_id);
-                $('#question-type').val(response.question_type);
-                $('#yes-count').val(response.yes_count);
-            }
-            , error: function(xhr) {
-                alert('Error! Could not process your answer.');
-            }
-        });
-    }
+            // Update the question text and hidden fields
+            $('#question-text').text(response.question);
+            $('#question-id').val(response.question_id);
+            $('#question-type').val(response.question_type);
+            $('#yes-count').val(response.yes_count);
+        },
+        error: function(xhr) {
+            alert('Error! Could not process your answer.');
+        }
+    });
+}
 
 </script>
 @endsection
