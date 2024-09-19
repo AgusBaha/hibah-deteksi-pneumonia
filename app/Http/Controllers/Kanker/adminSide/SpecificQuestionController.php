@@ -15,7 +15,7 @@ class SpecificQuestionController extends Controller
     public function index()
     {
         $specificQuestions = SpecificQuestion::with('mainQuestion')->get();
-        return view('admin.specific_questions.index', compact('specificQuestions'));
+        return view('kanker.admin.SpecificQuestions.index', compact('specificQuestions'));
     }
 
     /**
@@ -24,7 +24,7 @@ class SpecificQuestionController extends Controller
     public function create()
     {
         $mainQuestions = MainQuestion::all();
-        return view('admin.specific_questions.create', compact('mainQuestions'));
+        return view('kanker.admin.SpecificQuestions.create', compact('mainQuestions'));
     }
 
     /**
@@ -40,7 +40,7 @@ class SpecificQuestionController extends Controller
 
         SpecificQuestion::create($request->all());
 
-        return redirect()->route('admin.specific-questions.index')->with('success', 'Specific Question created successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific Question created successfully.');
     }
 
     /**
@@ -57,7 +57,7 @@ class SpecificQuestionController extends Controller
     public function edit(SpecificQuestion $specificQuestion)
     {
         $mainQuestions = MainQuestion::all();
-        return view('admin.specific_questions.edit', compact('specificQuestion', 'mainQuestions'));
+        return view('kanker.admin.SpecificQuestions.edit', compact('specificQuestion', 'mainQuestions'));
     }
 
     /**
@@ -73,7 +73,7 @@ class SpecificQuestionController extends Controller
 
         $specificQuestion->update($request->all());
 
-        return redirect()->route('admin.specific-questions.index')->with('success', 'Specific Question updated successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific Question updated successfully.');
     }
 
     /**
@@ -83,6 +83,6 @@ class SpecificQuestionController extends Controller
     {
         $specificQuestion->delete();
 
-        return redirect()->route('admin.specific-questions.index')->with('success', 'Specific Question deleted successfully.');
+        return redirect()->route('specific-questions.index')->with('success', 'Specific Question deleted successfully.');
     }
 }

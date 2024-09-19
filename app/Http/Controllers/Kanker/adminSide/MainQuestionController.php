@@ -15,7 +15,7 @@ class MainQuestionController extends Controller
     public function index()
     {
         $mainQuestions = MainQuestion::with('category')->get();
-        return view('admin.main_questions.index', compact('mainQuestions'));
+        return view('kanker.admin.MainQuestion.index', compact('mainQuestions'));
     }
 
     /**
@@ -24,7 +24,7 @@ class MainQuestionController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.main_questions.create', compact('categories'));
+        return view('kanker.admin.MainQuestion.create', compact('categories'));
     }
 
     /**
@@ -40,7 +40,7 @@ class MainQuestionController extends Controller
 
         MainQuestion::create($request->all());
 
-        return redirect()->route('admin.main-questions.index')->with('success', 'Main Question created successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main Question created successfully.');
     }
 
     /**
@@ -57,7 +57,7 @@ class MainQuestionController extends Controller
     public function edit(MainQuestion $mainQuestion)
     {
         $categories = Category::all();
-        return view('admin.main_questions.edit', compact('mainQuestion', 'categories'));
+        return view('kanker.admin.MainQuestion.edit', compact('mainQuestion', 'categories'));
     }
 
     /**
@@ -73,7 +73,7 @@ class MainQuestionController extends Controller
 
         $mainQuestion->update($request->all());
 
-        return redirect()->route('admin.main-questions.index')->with('success', 'Main Question updated successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main Question updated successfully.');
     }
 
     /**
@@ -83,6 +83,6 @@ class MainQuestionController extends Controller
     {
         $mainQuestion->delete();
 
-        return redirect()->route('admin.main-questions.index')->with('success', 'Main Question deleted successfully.');
+        return redirect()->route('main-questions.index')->with('success', 'Main Question deleted successfully.');
     }
 }
