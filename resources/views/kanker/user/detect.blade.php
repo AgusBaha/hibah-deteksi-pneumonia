@@ -36,8 +36,7 @@
                 value="{{ isset($mainQuestion) ? $mainQuestion->id : $specificQuestion->id }}">
             <input type="hidden" id="question-type" value="{{ $question_type }}">
             <input type="hidden" id="yes-count" value="0">
-            <input type="hidden" id="category-id"
-                value="{{ isset($specificQuestion) ? $specificQuestion->category_id : '' }}">
+            <input type="hidden" id="category-id" value="">
 
             <div class="btn-group">
                 <button class="btn btn-success" onclick="submitAnswer('yes')">IYA</button>
@@ -76,6 +75,12 @@
                     return;
                 }
 
+                // Update the question label
+                $('#question-label').html(response.question_type === 'main' ?
+                    '<span class="badge bg-primary">Main Question</span>' :
+                    '<span class="badge bg-secondary">Specific Question</span>'
+                );
+
                 // Update the question text and hidden fields
                 $('#question-text').text(response.question);
                 $('#question-id').val(response.question_id);
@@ -84,8 +89,7 @@
                 $('#category-id').val(response.category_id || '');
             },
             error: function(xhr) {
-                console.error(xhr.responseText);
-                alert('Error! Could not process your answer. ' + xhr.responseText);
+                alert('Error! Could not process your answer.');
             }
         });
     }
