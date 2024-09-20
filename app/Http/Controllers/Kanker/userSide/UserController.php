@@ -33,6 +33,7 @@ class UserController extends Controller
         $questionType = $request->input('question_type');
         $currentQuestionId = $request->input('current_question_id');
         $totalYesCount = $request->input('yes_count', 0);
+        $categoryId = $request->input('category_id');
 
         if ($questionType == 'main') {
             $nextQuestion = MainQuestion::where('id', '>', $currentQuestionId)->first();
@@ -66,7 +67,6 @@ class UserController extends Controller
             }
 
             return response()->json([
-                'status' => 'next',
                 'question_type' => 'main',
                 'question' => $nextQuestion->question,
                 'question_id' => $nextQuestion->id,
@@ -75,7 +75,6 @@ class UserController extends Controller
         }
 
         if ($questionType == 'specific') {
-            $categoryId = $request->input('category_id');
             $category = Category::with('specificQuestions')->find($categoryId);
             $nextQuestion = $category->specificQuestions->where('id', '>', $currentQuestionId)->first();
 
@@ -83,12 +82,20 @@ class UserController extends Controller
                 $totalYesCount++;
             }
 
+            // Cek apakah total "IYA" telah mencapai 3
+            if ($totalYesCount >= 6) {
+                return response()->json([
+                    'status' => 'complete',
+                    'message' => 'Deteksi selesai, bobot sudah tercapai untuk kategori: ' . $category->name,
+                    'yes_count' => $totalYesCount,
+                ]);
+            }
+
             if (!$nextQuestion) {
                 $nextCategory = Category::where('id', '>', $categoryId)->with('specificQuestions')->first();
                 if ($nextCategory) {
                     $nextQuestion = $nextCategory->specificQuestions->first();
                     return response()->json([
-                        'status' => 'next',
                         'question_type' => 'specific',
                         'question' => $nextQuestion->question,
                         'question_id' => $nextQuestion->id,
@@ -106,7 +113,6 @@ class UserController extends Controller
             }
 
             return response()->json([
-                'status' => 'next',
                 'question_type' => 'specific',
                 'question' => $nextQuestion->question,
                 'question_id' => $nextQuestion->id,
@@ -115,7 +121,5 @@ class UserController extends Controller
                 'category_id' => $category->id
             ]);
         }
-
-        return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan.'], 500);
     }
 }
