@@ -9,7 +9,7 @@ class UserResponse extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id', 'total_yes_count'];
+    protected $fillable = ['category_id', 'respondent_count'];
 
     public function category()
     {

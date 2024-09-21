@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_responses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('categories');
-            $table->integer('total_yes_count');
+            $table->integer('respondent_count')->default(0);
             $table->timestamps();
         });
     }

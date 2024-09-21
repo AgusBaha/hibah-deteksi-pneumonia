@@ -54,10 +54,10 @@ class UserController extends Controller
             }
 
             if (!$nextQuestion) {
-                // Semua pertanyaan utama sudah dijawab
+                // Simpan hasil jawaban ke database
                 UserResponse::create([
                     'category_id' => null,
-                    'total_yes_count' => $totalYesCount,
+                    'respondent_count' => 1, // Hitung satu orang yang menjawab
                 ]);
 
                 return response()->json([
@@ -87,7 +87,7 @@ class UserController extends Controller
                 // Simpan hasil jawaban spesifik
                 UserResponse::create([
                     'category_id' => $category->id,
-                    'total_yes_count' => $totalYesCount,
+                    'respondent_count' => 1, // Hitung satu orang yang menjawab
                 ]);
 
                 return response()->json([
@@ -114,7 +114,7 @@ class UserController extends Controller
                     // Simpan hasil jika semua kategori selesai
                     UserResponse::create([
                         'category_id' => $categoryId,
-                        'total_yes_count' => $totalYesCount,
+                        'respondent_count' => 1, // Hitung satu orang yang menjawab
                     ]);
 
                     return response()->json([

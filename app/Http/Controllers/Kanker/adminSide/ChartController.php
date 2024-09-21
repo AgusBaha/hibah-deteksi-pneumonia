@@ -10,8 +10,9 @@ class ChartController extends Controller
 {
     public function index()
     {
-        // Ambil data hasil jawaban
-        $results = UserResponse::selectRaw('category_id, SUM(total_yes_count) as total_yes')
+        // Ambil data hasil jawaban dengan eager loading
+        $results = UserResponse::with('category') // Pastikan ada relasi ke model Category
+            ->selectRaw('category_id, SUM(respondent_count) as total_yes') // Ganti total_yes_count dengan respondent_count
             ->groupBy('category_id')
             ->get();
 
@@ -21,7 +22,7 @@ class ChartController extends Controller
 
         foreach ($results as $result) {
             if ($result->category) {
-                $categories[] = $result->category->name;  // Asumsikan ada relasi ke model Category
+                $categories[] = $result->category->name;
                 $yesCounts[] = $result->total_yes;
             }
         }
