@@ -1,15 +1,3 @@
-<!--
-=========================================================
-* Material Kit 2 - v3.0.4
-=========================================================
-
-* Product Page:  https://www.creative-tim.com/product/material-kit
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
 
@@ -19,12 +7,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {{--
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('Assets/img/apple-icon.png') }}"> --}}
-    <link rel="icon" type="image/png" href="{{ asset('Assets/img/favicon.png') }}">
 
     <title>
-        Deteksi Pneumonia
+        Deteksi Kanker
     </title>
 
 
@@ -62,7 +47,7 @@
                     <div class="container-fluid px-0">
                         <a class="navbar-brand font-weight-bolder ms-sm-3" href="/" rel="tooltip"
                             title="Designed and Coded by Creative Tim" data-placement="bottom">
-                            Deteksi Pneumonia
+                            Deteksi Kanker
                         </a>
                         <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -75,71 +60,6 @@
                         </button>
                         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
                             <ul class="navbar-nav navbar-nav-hover ms-auto">
-                                {{-- <li class="nav-item dropdown dropdown-hover mx-2">
-                                    <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-                                        id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="material-icons opacity-6 me-2 text-md">dashboard</i>
-                                        Pages
-                                        <img src="{{ asset('Assets/img/down-arrow-dark.svg') }}" alt="down-arrow"
-                                            class="arrow ms-auto ms-md-2">
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
-                                        aria-labelledby="dropdownMenuPages">
-                                        <div class="d-none d-lg-block">
-                                            <h6
-                                                class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">
-                                                Landing Pages
-                                            </h6>
-                                            <a href="Javascript:void(0)" class="dropdown-item border-radius-md">
-                                                <span>Informasi Penyakit</span>
-                                            </a>
-                                            <a href="{{ route('basiskasus.konsultasi') }}"
-                                                class="dropdown-item border-radius-md">
-                                                <span>Konsultasi</span>
-                                            </a>
-                                            <h6
-                                                class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1 mt-3">
-                                                Account
-                                            </h6>
-                                            <a href="{{ route('login') }}" class="dropdown-item border-radius-md">
-                                                <span>Login</span>
-                                            </a>
-                                        </div>
-
-                                        <div class="d-lg-none">
-                                            <h6
-                                                class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">
-                                                Landing Pages
-                                            </h6>
-
-                                            <a href="Javascript:void(0)" class="dropdown-item border-radius-md">
-                                                <span>Informasi Penyakit</span>
-                                            </a>
-                                            <a href="{{ route('basiskasus.konsultasi') }}"
-                                                class="dropdown-item border-radius-md">
-                                                <span>Konsultasi</span>
-                                            </a>
-
-                                            <h6
-                                                class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1 mt-3">
-                                                Account
-                                            </h6>
-                                            <a href="{{ route('login') }}" class="dropdown-item border-radius-md">
-                                                <span>Login</span>
-                                            </a>
-
-                                        </div>
-
-                                    </div>
-                                </li> --}}
-
-                                <li class="nav-item mx-2">
-                                    <a href="{{ route('basiskasus.konsultasi') }}"
-                                        class="nav-link ps-2 d-flex cursor-pointer align-items-center">
-                                        <i class="material-icons opacity-6 me-2 text-md">article</i>
-                                        Konsultasi
-                                    </a>
-                                </li>
                                 <li class="nav-item mx-2">
                                     <a href="{{ route('deteksi.index') }}"
                                         class="nav-link ps-2 d-flex cursor-pointer align-items-center">
@@ -164,19 +84,12 @@
 
     @yield('content')
 
-
-
-
     <footer class="footer pt-5 mt-5">
         <div class="container">
             <div class=" row">
                 <div class="col-md-3 mb-4 ms-auto">
                     <div>
-                        {{-- <a href="javascript:void(0)">
-                            <img src="{{ asset('Assets/img/logo-ct-dark.png') }}" class="mb-3 footer-logo"
-                                alt="main_logo">
-                        </a> --}}
-                        <h6 class="font-weight-bolder mb-4">Deteksi Pneumonia</h6>
+                        <h6 class="font-weight-bolder mb-4">Deteksi Kanker</h6>
                     </div>
                     <div>
                         <ul class="d-flex flex-row ms-n3 nav">
