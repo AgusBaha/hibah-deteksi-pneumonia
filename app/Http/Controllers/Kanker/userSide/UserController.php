@@ -94,6 +94,7 @@ class UserController extends Controller
                     'status' => 'complete',
                     'message' => 'Terindikasi kanker pada kategori: ' . $category->name,
                     'yes_count' => $totalYesCount,
+                    'category_description' => $category->descriptions // Tampilkan deskripsi kategori
                 ]);
             }
 
@@ -121,6 +122,7 @@ class UserController extends Controller
                         'status' => 'complete',
                         'message' => 'Semua pertanyaan selesai, tidak terindikasi apapun.',
                         'yes_count' => $totalYesCount,
+                        'category_description' => '' // Tampilkan deskripsi kategori
                     ]);
                 }
             }
