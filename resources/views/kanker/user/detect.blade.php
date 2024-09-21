@@ -8,8 +8,7 @@
             <div class="row">
                 <div class="col-lg-7 text-center mx-auto">
                     <h1 class="text-white pt-3 mt-n5">Konsultasi Online</h1>
-                    <p class="lead text-white mt-3">Silahkan dapat Mengisi Data Berikut. <br />
-                    </p>
+                    <p class="lead text-white mt-3">Silahkan dapat Mengisi Data Berikut. <br /></p>
                     <a href="{{ route('deteksi.index') }}" class="btn bg-white text-dark">Konsultasi</a>
                 </div>
             </div>
@@ -73,6 +72,11 @@
             success: function(response) {
                 if (response.status === 'complete') {
                     $('#question-area').html('<p>' + response.message + '</p>');
+
+                    // Tampilkan deskripsi kategori jika ada
+                    if (response.category_description) {
+                        $('#question-area').append('<p><strong>Deskripsi Kategori: </strong>' + response.category_description + '</p>');
+                    }
                     return;
                 }
 
