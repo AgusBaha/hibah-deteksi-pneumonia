@@ -92,7 +92,7 @@ class UserController extends Controller
 
                 return response()->json([
                     'status' => 'complete',
-                    'message' => 'Terindikasi kanker pada kategori: ' . $category->name,
+                    'message' => 'Terindikasi kanker pada kategori: <strong>' . $category->name . '</strong>',
                     'yes_count' => $totalYesCount,
                     'category_description' => $category->descriptions // Tampilkan deskripsi kategori
                 ]);
