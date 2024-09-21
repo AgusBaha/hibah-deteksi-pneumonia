@@ -64,9 +64,8 @@
             </table>
         </div>
     </div>
-    {{-- {{ $dataBasisKasus->links() }} --}}
     <div class="d-flex mt-1">
-        {{-- {!! $dataBasisKasus->links() !!} --}}
+        {!! $categories->links() !!}
     </div>
 
     @push('scripts')
