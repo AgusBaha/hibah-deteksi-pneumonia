@@ -47,7 +47,7 @@
                     <tr>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->descriptions }}</td>
+                        <td>{!! $category->descriptions !!}</td>
                         <td>
                             <a href="{{ route('categories.edit', $category->id) }}"
                                 class="btn btn-sm btn-warning">Edit</a>
