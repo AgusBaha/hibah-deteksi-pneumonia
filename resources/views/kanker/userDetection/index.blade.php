@@ -2,7 +2,7 @@
 
 @section('content')
 <header class="header-2">
-    <div class="page-header min-vh-75 relative" style="background-image: url('{{ asset('Assets/img/bg2.jpg') }}')">
+    <div class="page-header min-vh-75 relative" style="background-image: url('{{ asset('Assets/img/kanker.jpg') }}')">
         <span class="mask bg-gradient-primary opacity-4"></span>
         <div class="container">
             <div class="row">
@@ -10,7 +10,7 @@
                     <h1 class="text-white pt-3 mt-n5">Konsultasi Online</h1>
                     <p class="lead text-white mt-3">Silahkan dapat Mengisi Data Berikut. <br />
                     </p>
-                    <a href="{{ route('basiskasus.konsultasi') }}" class="btn bg-white text-dark">Konsultasi</a>
+                    <a href="{{ route('deteksi.index') }}" class="btn bg-white text-dark">Konsultasi</a>
                 </div>
             </div>
         </div>
