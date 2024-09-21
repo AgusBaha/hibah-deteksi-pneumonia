@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +29,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-       <x-sidebar/>
+        <x-sidebar />
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -40,7 +39,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <x-navbar/>
+                <x-navbar />
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -56,7 +55,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <x-footer/>
+            <x-footer />
             <!-- End of Footer -->
 
         </div>
@@ -93,6 +92,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('Assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('Assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('Assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>

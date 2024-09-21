@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Kanker\adminSide\CategoryController;
+use App\Http\Controllers\Kanker\adminSide\ChartController;
 use App\Http\Controllers\Kanker\adminSide\MainQuestionController;
 use App\Http\Controllers\Kanker\adminSide\SpecificQuestionController;
 use App\Http\Controllers\Kanker\userSide\UserController;
@@ -62,6 +63,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('main-questions', MainQuestionController::class);
     Route::resource('specific-questions', SpecificQuestionController::class);
+    Route::get('/charts', [ChartController::class, 'index'])->name('charts');
 });
 
 

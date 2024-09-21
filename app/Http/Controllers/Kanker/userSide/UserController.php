@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kanker\Category;
 use App\Models\Kanker\MainQuestion;
 use App\Models\Kanker\SpecificQuestion;
+use App\Models\Kanker\UserResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -59,6 +60,12 @@ class UserController extends Controller
             }
 
             if (!$nextQuestion) {
+                // Simpan hasil jawaban ke database
+                UserResponse::create([
+                    'category_id' => null, // Tidak ada kategori untuk pertanyaan utama
+                    'total_yes_count' => $totalYesCount,
+                ]);
+
                 return response()->json([
                     'status' => 'complete',
                     'message' => 'Tidak terindikasi apapun',
@@ -82,8 +89,13 @@ class UserController extends Controller
                 $totalYesCount++;
             }
 
-            // Cek apakah total "IYA" telah mencapai 3
             if ($totalYesCount >= 6) {
+                // Simpan hasil jawaban spesifik
+                UserResponse::create([
+                    'category_id' => $category->id,
+                    'total_yes_count' => $totalYesCount,
+                ]);
+
                 return response()->json([
                     'status' => 'complete',
                     'message' => 'Deteksi selesai, bobot sudah tercapai untuk kategori: ' . $category->name,
@@ -92,24 +104,17 @@ class UserController extends Controller
             }
 
             if (!$nextQuestion) {
-                $nextCategory = Category::where('id', '>', $categoryId)->with('specificQuestions')->first();
-                if ($nextCategory) {
-                    $nextQuestion = $nextCategory->specificQuestions->first();
-                    return response()->json([
-                        'question_type' => 'specific',
-                        'question' => $nextQuestion->question,
-                        'question_id' => $nextQuestion->id,
-                        'category' => $nextCategory->name,
-                        'yes_count' => $totalYesCount,
-                        'category_id' => $nextCategory->id
-                    ]);
-                } else {
-                    return response()->json([
-                        'status' => 'complete',
-                        'message' => 'Semua pertanyaan spesifik selesai',
-                        'yes_count' => $totalYesCount,
-                    ]);
-                }
+                // Simpan hasil jika kategori spesifik selesai
+                UserResponse::create([
+                    'category_id' => $categoryId,
+                    'total_yes_count' => $totalYesCount,
+                ]);
+
+                return response()->json([
+                    'status' => 'complete',
+                    'message' => 'Semua pertanyaan spesifik selesai',
+                    'yes_count' => $totalYesCount,
+                ]);
             }
 
             return response()->json([
