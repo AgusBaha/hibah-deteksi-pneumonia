@@ -11,7 +11,7 @@ class MainQuestionController extends Controller
 {
     public function index()
     {
-        $mainQuestions = MainQuestion::all();
+        $mainQuestions = MainQuestion::paginate(10);
         return view('kanker.admin.MainQuestion.index', compact('mainQuestions'));
     }
 

@@ -12,7 +12,7 @@ class SpecificQuestionController extends Controller
 {
     public function index()
     {
-        $specificQuestions = SpecificQuestion::with('category')->get();
+        $specificQuestions = SpecificQuestion::with('category')->paginate(10);
         return view('kanker.admin.SpecificQuestions.index', compact('specificQuestions'));
     }
 

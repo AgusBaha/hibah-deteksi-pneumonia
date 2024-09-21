@@ -9,5 +9,10 @@ class UserResponse extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['question_id', 'question_type', 'response', 'weight'];
+    protected $fillable = ['category_id', 'respondent_count'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

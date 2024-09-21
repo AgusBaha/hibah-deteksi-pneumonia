@@ -20,11 +20,8 @@
     <div class="container mt-5">
         <h1>Deteksi Kanker</h1>
 
-        <!-- Area untuk menampilkan pertanyaan -->
         <div id="question-area">
-            <!-- Cek apakah ada pertanyaan untuk ditampilkan -->
             @if (isset($mainQuestion) || isset($specificQuestion))
-            <!-- Tampilkan jenis pertanyaan (Main atau Specific) -->
             <h3 id="question-label">
                 @if ($question_type == 'main')
                 <span class="badge bg-primary">Main Question</span>
@@ -33,15 +30,14 @@
                 @endif
             </h3>
 
-            <!-- Tampilkan teks pertanyaan -->
             <p id="question-text">{{ isset($mainQuestion) ? $mainQuestion->question : $specificQuestion->question }}</p>
 
             <input type="hidden" id="question-id"
                 value="{{ isset($mainQuestion) ? $mainQuestion->id : $specificQuestion->id }}">
             <input type="hidden" id="question-type" value="{{ $question_type }}">
             <input type="hidden" id="yes-count" value="0">
+            <input type="hidden" id="category-id" value="">
 
-            <!-- Tombol Jawaban -->
             <div class="btn-group">
                 <button class="btn btn-success" onclick="submitAnswer('yes')">IYA</button>
                 <button class="btn btn-danger" onclick="submitAnswer('no')">TIDAK</button>
@@ -53,43 +49,49 @@
     </div>
 </div>
 
-<!-- Load jQuery dari CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Ajax -->
 <script>
     function submitAnswer(answer) {
-    let questionId = document.getElementById('question-id').value;
-    let questionType = document.getElementById('question-type').value;
-    let yesCount = document.getElementById('yes-count').value;
+        let questionId = document.getElementById('question-id').value;
+        let questionType = document.getElementById('question-type').value;
+        let yesCount = document.getElementById('yes-count').value;
+        let categoryId = document.getElementById('category-id').value;
 
-    $.ajax({
-        url: '{{ route("deteksi.process") }}',
-        method: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            answer: answer,
-            current_question_id: questionId,
-            question_type: questionType,
-            yes_count: yesCount
-        },
-        success: function(response) {
-            if (response.status == 'complete') {
-                $('#question-area').html('<p>' + response.message + '</p>');
-                return;
+        $.ajax({
+            url: '{{ route("deteksi.process") }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                answer: answer,
+                current_question_id: questionId,
+                question_type: questionType,
+                yes_count: yesCount,
+                category_id: categoryId
+            },
+            success: function(response) {
+                if (response.status === 'complete') {
+                    $('#question-area').html('<p>' + response.message + '</p>');
+                    return;
+                }
+
+                // Update the question label
+                $('#question-label').html(response.question_type === 'main' ?
+                    '<span class="badge bg-primary">Main Question</span>' :
+                    '<span class="badge bg-secondary">Specific Question</span>'
+                );
+
+                // Update the question text and hidden fields
+                $('#question-text').text(response.question);
+                $('#question-id').val(response.question_id);
+                $('#question-type').val(response.question_type);
+                $('#yes-count').val(response.yes_count);
+                $('#category-id').val(response.category_id || '');
+            },
+            error: function(xhr) {
+                alert('Error! Could not process your answer.');
             }
-
-            // Update the question text and hidden fields
-            $('#question-text').text(response.question);
-            $('#question-id').val(response.question_id);
-            $('#question-type').val(response.question_type);
-            $('#yes-count').val(response.yes_count);
-        },
-        error: function(xhr) {
-            alert('Error! Could not process your answer.');
-        }
-    });
-}
-
+        });
+    }
 </script>
 @endsection

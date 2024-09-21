@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('question_id');
-            $table->string('question_type'); // 'main' atau 'specific'
-            $table->string('response'); // jawaban user: 'yes' atau 'no'
-            $table->decimal('weight', 5, 2)->nullable(); // Bobot berdasarkan jawaban
+            $table->foreignId('category_id')->nullable()->constrained('categories');
+            $table->integer('respondent_count')->default(0);
             $table->timestamps();
         });
     }

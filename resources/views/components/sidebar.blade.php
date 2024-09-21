@@ -47,6 +47,8 @@
         </a>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Route::is('charts.*') ? 'active' : '' }}"
+                    href="{{ route('charts') }}">Charts</a>
                 <a class="collapse-item {{ Route::is('categories.*') ? 'active' : '' }}"
                     href="{{ route('categories.index') }}">Categories</a>
                 <a class="collapse-item {{ Route::is('main-questions.*') ? 'active' : '' }}"
