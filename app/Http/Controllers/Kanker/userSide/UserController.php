@@ -14,15 +14,9 @@ class UserController extends Controller
     public function index()
     {
         $mainQuestion = MainQuestion::first();
-        $specificQuestions = SpecificQuestion::where('category_id', 1)->get();
-
         if ($mainQuestion) {
             $question_type = 'main';
             return view('kanker.user.detect', compact('mainQuestion', 'question_type'));
-        } elseif ($specificQuestions->isNotEmpty()) {
-            $question_type = 'specific';
-            $specificQuestion = $specificQuestions->first();
-            return view('kanker.user.detect', compact('specificQuestion', 'question_type'));
         } else {
             return view('kanker.user.detect')->with('message', 'No questions available.');
         }
@@ -60,9 +54,9 @@ class UserController extends Controller
             }
 
             if (!$nextQuestion) {
-                // Simpan hasil jawaban ke database
+                // Semua pertanyaan utama sudah dijawab
                 UserResponse::create([
-                    'category_id' => null, // Tidak ada kategori untuk pertanyaan utama
+                    'category_id' => null,
                     'total_yes_count' => $totalYesCount,
                 ]);
 
@@ -98,23 +92,37 @@ class UserController extends Controller
 
                 return response()->json([
                     'status' => 'complete',
-                    'message' => 'Deteksi selesai, bobot sudah tercapai untuk kategori: ' . $category->name,
+                    'message' => 'Terindikasi kanker pada kategori: ' . $category->name,
                     'yes_count' => $totalYesCount,
                 ]);
             }
 
             if (!$nextQuestion) {
-                // Simpan hasil jika kategori spesifik selesai
-                UserResponse::create([
-                    'category_id' => $categoryId,
-                    'total_yes_count' => $totalYesCount,
-                ]);
+                // Lanjut ke kategori berikutnya
+                $nextCategory = Category::where('id', '>', $categoryId)->with('specificQuestions')->first();
+                if ($nextCategory && $nextCategory->specificQuestions->isNotEmpty()) {
+                    $nextQuestion = $nextCategory->specificQuestions->first();
+                    return response()->json([
+                        'question_type' => 'specific',
+                        'question' => $nextQuestion->question,
+                        'question_id' => $nextQuestion->id,
+                        'category' => $nextCategory->name,
+                        'yes_count' => $totalYesCount,
+                        'category_id' => $nextCategory->id
+                    ]);
+                } else {
+                    // Simpan hasil jika semua kategori selesai
+                    UserResponse::create([
+                        'category_id' => $categoryId,
+                        'total_yes_count' => $totalYesCount,
+                    ]);
 
-                return response()->json([
-                    'status' => 'complete',
-                    'message' => 'Semua pertanyaan spesifik selesai',
-                    'yes_count' => $totalYesCount,
-                ]);
+                    return response()->json([
+                        'status' => 'complete',
+                        'message' => 'Semua pertanyaan selesai, tidak terindikasi apapun.',
+                        'yes_count' => $totalYesCount,
+                    ]);
+                }
             }
 
             return response()->json([
