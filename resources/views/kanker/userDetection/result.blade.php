@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-lg-5 ms-auto">
                 <h4 class="mb-1">Thank you for your support!</h4>
-                <p class="lead mb-0">We provide pneumonia consultation services</p>
+                <p class="lead mb-0">We provide cancer consultation services</p>
             </div>
             <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
                 <a href="Javascript:void(0)" class="btn btn-twitter mb-0 me-2" target="_blank">

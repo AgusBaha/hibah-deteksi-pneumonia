@@ -3,6 +3,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @endpush
 
+    <div id="question-area ">
+        <a href="{{ url('/export-excel') }}" class="btn btn-primary mb-2">Download Hasil dalam Excel</a>
+    </div>
+
     <div class="card position-relative">
         <div class="card-body shadow">
             <div style="width: 50%">
