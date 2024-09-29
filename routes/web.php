@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\UserResponsesExport;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Kanker\adminSide\CategoryController;
 use App\Http\Controllers\Kanker\adminSide\ChartController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Kanker\adminSide\SpecificQuestionController;
 use App\Http\Controllers\Kanker\userSide\UserController;
 use App\Http\Controllers\User\DetectionController;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 /*
@@ -66,6 +68,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/charts', [ChartController::class, 'index'])->name('charts');
 });
 
+Route::get('/export-excel', function () {
+    return Excel::download(new UserResponsesExport, 'user_responses.xlsx');
+});
 
 Route::get('/deteksi-kanker', [UserController::class, 'index'])->name('deteksi.index');
 Route::post('/deteksi-kanker', [UserController::class, 'store'])->name('deteksi.store');
