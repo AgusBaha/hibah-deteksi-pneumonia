@@ -16,18 +16,21 @@ class UserResponsesExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
+        // Ambil semua data dari UserResponse dan kelompokan berdasarkan kategori
         return UserResponse::with('category')
             ->get()
-            ->map(function ($response) {
+            ->groupBy('category_id') // Kelompokkan berdasarkan category_id
+            ->map(function ($responses, $categoryId) {
+                // Agregasi data dalam setiap kelompok kategori
                 return [
-                    'ID' => $response->id,
-                    'Nama Kategori' => $response->category->name ?? 'Tidak Ada Kategori',
-                    'Jumlah Iya' => $response->yes_count,
-                    'Jumlah Tidak' => $response->no_count,
-                    'Responden' => $response->respondent_count,
-                    'Tanggal Respon' => Carbon::parse($response->created_at)->format('d-m-Y'),
+                    'ID' => $categoryId,
+                    'Nama Kategori' => $responses->first()->category->name ?? 'Tidak Ada Kategori',
+                    'Jumlah Iya' => $responses->sum('yes_count'),
+                    'Jumlah Tidak' => $responses->sum('no_count'),
+                    'Responden' => $responses->sum('respondent_count'),
+                    'Tanggal Respon' => Carbon::parse($responses->first()->created_at)->format('d-m-Y'),
                 ];
-            });
+            })->values(); // Mengambil hanya nilai tanpa kunci (index numerik)
     }
 
     /**

@@ -24,23 +24,37 @@ class UserController extends Controller
 
     public function processQuestion(Request $request)
     {
-        $answer = $request->input('answer');
-        $questionType = $request->input('question_type');
-        $currentQuestionId = $request->input('current_question_id');
+        // Validasi input
+        $validatedData = $request->validate([
+            'answer' => 'required|in:yes,no',
+            'question_type' => 'required|in:main,specific',
+            'current_question_id' => 'required|integer',
+            'yes_count' => 'nullable|integer',
+            'no_count' => 'nullable|integer',
+            'category_id' => 'nullable|integer',
+        ]);
+
+        // Ambil data dari request yang telah divalidasi
+        $answer = $validatedData['answer'];
+        $questionType = $validatedData['question_type'];
+        $currentQuestionId = $validatedData['current_question_id'];
         $totalYesCount = $request->input('yes_count', 0);
         $totalNoCount = $request->input('no_count', 0); // Tambahkan tracking untuk jawaban "tidak"
         $categoryId = $request->input('category_id');
 
         // Logika pertanyaan utama
         if ($questionType == 'main') {
+            // Cari pertanyaan berikutnya dalam kategori pertanyaan utama
             $nextQuestion = MainQuestion::where('id', '>', $currentQuestionId)->first();
 
+            // Hitung jumlah jawaban "yes" dan "no"
             if ($answer == 'yes') {
                 $totalYesCount++;
             } else {
                 $totalNoCount++;
             }
 
+            // Jika jawaban "yes" >= 3, alihkan ke pertanyaan spesifik kategori pertama
             if ($totalYesCount >= 3) {
                 $firstCategory = Category::with('specificQuestions')->first();
                 if ($firstCategory) {
@@ -58,13 +72,14 @@ class UserController extends Controller
                 }
             }
 
+            // Jika tidak ada pertanyaan selanjutnya (pertanyaan utama habis)
             if (!$nextQuestion) {
-                // Simpan hasil jawaban ke database
+                // Simpan hasil jawaban pengguna ke database
                 UserResponse::create([
                     'category_id' => null,
                     'yes_count' => $totalYesCount,
                     'no_count' => $totalNoCount,
-                    'respondent_count' => 1,
+                    'respondent_count' => 1, // Menghitung satu responden
                 ]);
 
                 return response()->json([
@@ -75,6 +90,7 @@ class UserController extends Controller
                 ]);
             }
 
+            // Jika masih ada pertanyaan utama, lanjutkan ke pertanyaan berikutnya
             return response()->json([
                 'question_type' => 'main',
                 'question' => $nextQuestion->question,
@@ -86,22 +102,25 @@ class UserController extends Controller
 
         // Logika untuk pertanyaan spesifik
         if ($questionType == 'specific') {
+            // Ambil kategori pertanyaan spesifik
             $category = Category::with('specificQuestions')->find($categoryId);
             $nextQuestion = $category->specificQuestions->where('id', '>', $currentQuestionId)->first();
 
+            // Hitung jumlah jawaban "yes" dan "no"
             if ($answer == 'yes') {
                 $totalYesCount++;
             } else {
                 $totalNoCount++;
             }
 
+            // Jika jawaban "yes" >= 6, simpan hasil dan selesai
             if ($totalYesCount >= 6) {
-                // Simpan hasil jawaban spesifik
+                // Simpan hasil jawaban spesifik ke database
                 UserResponse::create([
                     'category_id' => $category->id,
                     'yes_count' => $totalYesCount,
                     'no_count' => $totalNoCount,
-                    'respondent_count' => 1,
+                    'respondent_count' => 1, // Menghitung satu responden
                 ]);
 
                 return response()->json([
@@ -113,8 +132,8 @@ class UserController extends Controller
                 ]);
             }
 
+            // Jika tidak ada pertanyaan spesifik selanjutnya, alihkan ke kategori berikutnya
             if (!$nextQuestion) {
-                // Lanjut ke kategori berikutnya atau simpan hasil akhir
                 $nextCategory = Category::where('id', '>', $categoryId)->with('specificQuestions')->first();
                 if ($nextCategory && $nextCategory->specificQuestions->isNotEmpty()) {
                     $nextQuestion = $nextCategory->specificQuestions->first();
@@ -128,11 +147,12 @@ class UserController extends Controller
                         'category_id' => $nextCategory->id
                     ]);
                 } else {
+                    // Simpan hasil akhir jika semua kategori telah selesai
                     UserResponse::create([
                         'category_id' => $categoryId,
                         'yes_count' => $totalYesCount,
                         'no_count' => $totalNoCount,
-                        'respondent_count' => 1,
+                        'respondent_count' => 1, // Menghitung satu responden
                     ]);
 
                     return response()->json([
@@ -144,6 +164,7 @@ class UserController extends Controller
                 }
             }
 
+            // Jika masih ada pertanyaan spesifik, lanjutkan ke pertanyaan berikutnya
             return response()->json([
                 'question_type' => 'specific',
                 'question' => $nextQuestion->question,
