@@ -39,7 +39,7 @@ class UserController extends Controller
         $questionType = $validatedData['question_type'];
         $currentQuestionId = $validatedData['current_question_id'];
         $totalYesCount = $request->input('yes_count', 0);
-        $totalNoCount = $request->input('no_count', 0); // Tambahkan tracking untuk jawaban "tidak"
+        $totalNoCount = $request->input('no_count', 0);
         $categoryId = $request->input('category_id');
 
         // Logika pertanyaan utama
@@ -79,7 +79,7 @@ class UserController extends Controller
                     'category_id' => null,
                     'yes_count' => $totalYesCount,
                     'no_count' => $totalNoCount,
-                    'respondent_count' => 1, // Menghitung satu responden
+                    'respondent_count' => 1,
                 ]);
 
                 return response()->json([
@@ -113,14 +113,15 @@ class UserController extends Controller
                 $totalNoCount++;
             }
 
-            // Jika jawaban "yes" >= 6, simpan hasil dan selesai
-            if ($totalYesCount >= 6) {
+            // Jika bobot jawaban "yes" >= 60, simpan hasil dan selesai
+            $bobotYes = $totalYesCount * 20; // Misal setiap jawaban "yes" bernilai 20
+            if ($bobotYes >= 120) {
                 // Simpan hasil jawaban spesifik ke database
                 UserResponse::create([
                     'category_id' => $category->id,
                     'yes_count' => $totalYesCount,
                     'no_count' => $totalNoCount,
-                    'respondent_count' => 1, // Menghitung satu responden
+                    'respondent_count' => 1,
                 ]);
 
                 return response()->json([
@@ -152,7 +153,7 @@ class UserController extends Controller
                         'category_id' => $categoryId,
                         'yes_count' => $totalYesCount,
                         'no_count' => $totalNoCount,
-                        'respondent_count' => 1, // Menghitung satu responden
+                        'respondent_count' => 1,
                     ]);
 
                     return response()->json([

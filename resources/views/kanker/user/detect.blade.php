@@ -36,6 +36,7 @@
                 value="{{ isset($mainQuestion) ? $mainQuestion->id : $specificQuestion->id }}">
             <input type="hidden" id="question-type" value="{{ $question_type }}">
             <input type="hidden" id="yes-count" value="0">
+            <input type="hidden" id="no-count" value="0">
             <input type="hidden" id="category-id" value="">
 
             <div class="btn-group">
@@ -56,6 +57,7 @@
         let questionId = document.getElementById('question-id').value;
         let questionType = document.getElementById('question-type').value;
         let yesCount = document.getElementById('yes-count').value;
+        let noCount = document.getElementById('no-count').value;
         let categoryId = document.getElementById('category-id').value;
 
         $.ajax({
@@ -67,6 +69,7 @@
                 current_question_id: questionId,
                 question_type: questionType,
                 yes_count: yesCount,
+                no_count: noCount,
                 category_id: categoryId
             },
             success: function(response) {
@@ -91,6 +94,7 @@
                 $('#question-id').val(response.question_id);
                 $('#question-type').val(response.question_type);
                 $('#yes-count').val(response.yes_count);
+                $('#no-count').val(response.no_count);
                 $('#category-id').val(response.category_id || '');
             },
             error: function(xhr) {
