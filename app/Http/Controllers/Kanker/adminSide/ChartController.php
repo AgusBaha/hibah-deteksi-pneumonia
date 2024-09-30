@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Kanker\adminSide;
 use App\Http\Controllers\Controller;
 use App\Models\Kanker\UserResponse;
 use Illuminate\Http\Request;
+use App\Exports\UserResponsesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ChartController extends Controller
 {
@@ -28,5 +30,15 @@ class ChartController extends Controller
         }
 
         return view('kanker.admin.chart.index', compact('categories', 'yesCounts'));
+    }
+
+    /**
+     * Proses download file Excel.
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportExcel()
+    {
+        return Excel::download(new UserResponsesExport, 'user_responses.xlsx');
     }
 }

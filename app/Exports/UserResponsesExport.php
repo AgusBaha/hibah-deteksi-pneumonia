@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Kanker\UserResponse as KankerUserResponse;
+use App\Models\Kanker\UserResponse;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Carbon\Carbon;
@@ -10,28 +10,33 @@ use Carbon\Carbon;
 class UserResponsesExport implements FromCollection, WithHeadings
 {
     /**
-     * Mengambil semua data respon user untuk diekspor, termasuk nama kategori
+     * Ambil koleksi data yang akan diekspor.
+     *
+     * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        // Mengambil data termasuk nama kategori
-        return KankerUserResponse::with('category') // Eager load relasi category
+        // Ambil semua data dari UserResponse dan kelompokan berdasarkan kategori
+        return UserResponse::with('category')
             ->get()
-            ->map(function ($response) {
+            ->groupBy('category_id') // Kelompokkan berdasarkan category_id
+            ->map(function ($responses, $categoryId) {
+                // Agregasi data dalam setiap kelompok kategori
                 return [
-                    'id' => $response->id,
-                    'category_name' => $response->category->name, // Menggunakan nama kategori
-                    'jumlah_iya' => $response->yes_count,
-                    'jumlah_tidak' => $response->no_count,
-                    'responden' => $response->respondent_count,
-                    // Format tanggal menjadi d-m-Y
-                    'tanggal_respon' => Carbon::parse($response->created_at)->format('d-m-Y'),
+                    'ID' => $categoryId,
+                    'Nama Kategori' => $responses->first()->category->name ?? 'Tidak Ada Kategori',
+                    'Jumlah Iya' => $responses->sum('yes_count'),
+                    'Jumlah Tidak' => $responses->sum('no_count'),
+                    'Responden' => $responses->sum('respondent_count'),
+                    'Tanggal Respon' => Carbon::parse($responses->first()->created_at)->format('d-m-Y'),
                 ];
-            });
+            })->values(); // Mengambil hanya nilai tanpa kunci (index numerik)
     }
 
     /**
-     * Menentukan judul kolom dalam file Excel
+     * Buat heading kolom untuk file Excel.
+     *
+     * @return array
      */
     public function headings(): array
     {

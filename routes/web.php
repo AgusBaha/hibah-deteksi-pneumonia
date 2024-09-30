@@ -68,9 +68,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/charts', [ChartController::class, 'index'])->name('charts');
 });
 
-Route::get('/export-excel', function () {
-    return Excel::download(new UserResponsesExport, 'user_responses.xlsx');
-});
+Route::get('/export-excel', [ChartController::class, 'exportExcel'])->name('export.excel');
 
 Route::get('/deteksi-kanker', [UserController::class, 'index'])->name('deteksi.index');
 Route::post('/deteksi-kanker', [UserController::class, 'store'])->name('deteksi.store');
