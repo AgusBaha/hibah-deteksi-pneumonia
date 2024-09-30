@@ -17,6 +17,7 @@ class UserResponseSeeder extends Seeder
         $userResponses = [
             ['category_id' => Category::where('name', 'Kanker Payudara')->first()->id, 'respondent_count' => 100, 'yes_count' => 40, 'no_count' => 60],
             ['category_id' => Category::where('name', 'Kanker Paru-Paru')->first()->id, 'respondent_count' => 80, 'yes_count' => 50, 'no_count' => 30],
+            ['category_id' => Category::where('name', 'Kanker Serviks')->first()->id, 'respondent_count' => 80, 'yes_count' => 20, 'no_count' => 30],
         ];
 
         foreach ($userResponses as $userResponse) {
